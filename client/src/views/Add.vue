@@ -1,7 +1,7 @@
 <template>
     
     <div class="add flex-1 flex flex-col bg-primary text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
-        <div class="flex-1">
+        <div class="flex-1 max-w-screen-2xl lg:mx-auto w-full">
             <nav id="nav">
             <router-link to="/about" class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase">Despre Proiect</router-link>
             </nav>
