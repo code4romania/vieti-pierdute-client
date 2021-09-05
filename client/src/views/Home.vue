@@ -9,7 +9,7 @@
           </nav>
           <h1 class="my-5 py-3 text-7xl font-light lg:text-9xl xl:text-10xl">32,465</h1>
           <h2 class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl">Vieți pierdute<br> în România</h2>
-          <ul class="mt-2 mb-10 lg:mt-8 xl:mt-12">
+          <ul class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0">
             <li><router-link class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4" to="/listing"><span class="underline">Descoperă toate numele</span><span class="pl-4">&#8594;</span></router-link></li>
             <li><router-link class="inline-block mb-2 py-3 text-2xl font-normal underline lg:text-2xl xl:text-3xl lg:mb-4" to="/add">Adaugă povestea cuiva drag</router-link></li>
           </ul>
