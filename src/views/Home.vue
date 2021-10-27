@@ -7,7 +7,9 @@
           <nav id="nav">
             <router-link to="/despre" class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase">Despre Proiect</router-link>
           </nav>
-          <h1 class="my-5 py-3 text-7xl font-light lg:text-9xl xl:text-10xl">32,465</h1>
+          <h1 class="my-5 py-3 text-7xl font-light lg:text-9xl xl:text-10xl">
+            {{formatNumber(numberDeceased)}}
+          </h1>
           <h2 class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl">Vieți pierdute<br> în România</h2>
           <ul class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0">
             <li>
@@ -29,13 +31,24 @@
 </template>
 
 <script>
-  // @ is an alias to /src
-  import MadeBy from '@/components/MadeBy.vue'
+  import numeral from "numeral";
+  import MadeBy from "@/components/MadeBy.vue";
 
   export default {
-    name: 'Home',
+    name: "Home",
+    props: {
+      numberDeceased: {
+        type: Number,
+        default: 0
+      }
+    },
     components: {
       MadeBy
+    },
+    methods: {
+      formatNumber(value) {
+        return numeral(value).format("0,0");
+      }
     }
   }
 </script>

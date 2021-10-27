@@ -6,19 +6,21 @@
         <div class="lg:w-1/3">
           <div class="listing-aside lg:fixed flex flex-col h-full lg:py-9">
             <div class="mb-6 lg:mb-0 flex-1">
-              <router-link
-                to="/despre"
-                class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
-              >
-                Despre Proiect
-              </router-link>
+              <div id="nav">
+                <router-link
+                  to="/despre"
+                  class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
+                >
+                  Despre Proiect
+                </router-link>
+              </div>
 
               <router-link
                 to="/"
                 class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
               >
                 <span class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"></span>
-                32,465
+                {{formatNumber(numberDeceased)}}
               </router-link>
 
               <p class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80">This is a content area describing the web purpose and what users will find on it. It is cool to keep it short but explanatory</p>
@@ -44,7 +46,6 @@
               v-if="stories.length > 0"
               class="listing-list md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
             >
-            {{wrappedStories}}
               <template v-for="story in stories" v-bind:key="story.id">
                 <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
                   <router-link
@@ -76,7 +77,9 @@
 </template>
 
 <script>
+import numeral from "numeral";
 import axios from "axios";
+
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 
@@ -85,6 +88,12 @@ export default {
   components: {
     MadeBy,
     Spinner
+  },
+  props: {
+    numberDeceased: {
+      type: Number,
+      default: 0
+    }
   },
   data: () => {
     return {
@@ -95,6 +104,7 @@ export default {
   },
   computed: {
     wrappedStories () {
+
       return [1, 2, 3]
     }
   },
@@ -104,8 +114,11 @@ export default {
     })
   },
   methods: {
-    generateDottedName() {
+    dottedName() {
       return "*** ****** ******"
+    },
+    formatNumber(value) {
+      return numeral(value).format("0,0");
     }
   }
 }
