@@ -19,7 +19,7 @@
               >
             </nav>
             <h1 class="my-5 py-3 text-7xl font-light lg:text-9xl xl:text-10xl">
-              {{ component.victimsCount.victims }}
+              {{ (+component.victimsCount.victims).toLocaleString() }}
             </h1>
             <h2
               class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl"
