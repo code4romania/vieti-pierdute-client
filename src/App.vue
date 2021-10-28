@@ -4,13 +4,11 @@
     <router-view v-slot="{ Component }">
       <transition name="route" mode="out-in">
         <component
-          v-if="numberDeceased > 0"
-          :numberDeceased="numberDeceased"
           :is="Component"
         ></component>
-        <div class="my-64" v-else>
+        <!-- <div class="my-64" v-else>
           <Spinner />
-        </div>
+        </div> -->
       </transition>  
     </router-view>
   
@@ -32,11 +30,11 @@ export default {
       }
     },
     mounted() {
-      axios.get(process.env.VUE_APP_LATEST_DATA + "/smallData.json").then((response) => {
-        this.numberDeceased = response.data.currentDayStats.numberDeceased
-      }).catch(err => {
-        console.log(err)
-      })
+      // axios.get(process.env.VUE_APP_LATEST_DATA + "/smallData.json").then((response) => {
+      //   this.numberDeceased = response.data.currentDayStats.numberDeceased
+      // }).catch(err => {
+      //   console.log(err)
+      // })
     }
   }
 </script>
