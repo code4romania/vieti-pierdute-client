@@ -31,7 +31,7 @@
                 v-if="component.buttons"
                 class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
               >
-                <li v-for="button in component.buttons">
+                <li v-for="button in component.buttons" v-bind:key="button.id">
                   <router-link
                     v-if="button.href"
                     :to="button.href"
