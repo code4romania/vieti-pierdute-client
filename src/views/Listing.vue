@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import numeral from "numeral";
 import axios from "axios";
 
 import MadeBy from "@/components/MadeBy.vue";
@@ -109,9 +108,6 @@ export default {
   methods: {
     dottedName() {
       return "*** ****** ******"
-    },
-    formatNumber(value) {
-      return numeral(value).format("0,0");
     }
   }
 }
