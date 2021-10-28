@@ -3,12 +3,21 @@
 
     <router-view v-slot="{ Component }">
       <transition name="route" mode="out-in">
-        <component :is="Component"></component>  
+        <component
+          :is="Component"
+        ></component>
       </transition>  
     </router-view>
   
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'App'
+  }
+</script>
+
 
 <style>
 

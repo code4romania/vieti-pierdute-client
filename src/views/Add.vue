@@ -5,17 +5,16 @@
     <div class="flex-1 max-w-screen-2xl lg:mx-auto w-full">
       <nav id="nav">
         <router-link
-          to="/about"
+          to="/despre"
           class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
-          >Despre Proiect</router-link
-        >
+        >Despre Proiect</router-link>
       </nav>
       <Heading :level="1">
-        <router-link to="/">
+        <a @click="$router.go(-1)" class="cursor-pointer">
           <span
             class="absolute left-0 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
           ></span>
-        </router-link>
+        </a>
         <span class="pl-10">
           Adaugă povestea cuiva drag
         </span>
