@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.VUE_APP_API;
 
-const get = (path, cb) =>
+const getOne = (path, cb) =>
   axios
     .get(BASE_URL + path)
     .then(({ data }) => {
@@ -10,9 +10,18 @@ const get = (path, cb) =>
     })
     .catch(error => cb(error, null));
 
-const post = path => axios.post(BASE_URL + path);
+const getMany = (path, cb) =>
+  axios
+    .get(BASE_URL + path)
+    .then(({ data }) => {
+      cb(null, data);
+    })
+    .catch(error => cb(error, null));
+
+const getPage = (slug, cb) => getOne(`/pages?slug=${slug}`, cb);
+const getStories = (cb) => getMany('/stories', cb);
 
 export default {
-  get,
-  post
+  getPage,
+  getStories
 };
