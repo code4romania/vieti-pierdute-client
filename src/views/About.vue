@@ -1,6 +1,6 @@
 <template>
 
-  <div class="about bg-white flex-1 flex flex-col px-5 py-7 md:py-9 md:px-10 lg:px-20">
+  <div class="flex flex-col flex-1 bg-white text-black px-5 py-7 md:py-9 md:px-10 lg:px-20">
     <div class="relative flex-1 max-w-screen-2xl lg:mx-auto">
 
       <nav id="nav">
@@ -28,11 +28,8 @@
 </template>
 
 <script>
-    // export default {
-    //     name: 'About',
-    //     components: {
-    //         MadeBy
-    //     }
-    // }
+  export default {
+    name: "About"
+  }
 </script>
 

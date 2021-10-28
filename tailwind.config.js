@@ -1,15 +1,11 @@
 module.exports = {
-    purge: [],
+    purge: [ "/src/**/*.vue"],
     darkMode: false, // or "media" or "class"
     theme: {
         fontFamily: {
             "sans": "Roboto, sans",
             "serif": "Fraunces, serif",
         },
-        backgroundColor: theme => ({
-            ...theme("colors"),
-            "primary": "#1d1d1d",
-        }),
         letterSpacing: {
             tight: "-.025em",
             normal: "0",
@@ -21,10 +17,10 @@ module.exports = {
             fontSize: {
                 "10xl": "12em",
             },
+            colors: {
+                black: "#1d1d1d",
+                white: "#ffffff",
+            },
         },
     },
-    variants: {
-        extend: {},
-    },
-    plugins: [],
 }

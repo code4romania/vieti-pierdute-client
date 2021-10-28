@@ -1,15 +1,15 @@
 <template>
 
-  <div class="listing flex flex-1 bg-primary text-white px-5 py-7 md:py-9 md:px-10 lg:px-20 lg:py-0">
+  <div class="flex flex-col flex-1 bg-black text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
     <div class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto">
       <div class="flex-1 lg:flex ">
         <div class="lg:w-1/3">
           <div class="listing-aside lg:fixed flex flex-col h-full lg:py-9">
             <div class="mb-6 lg:mb-0 flex-1">
-              <div id="nav">
+              <div>
                 <router-link
                   to="/despre"
-                  class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
+                  class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
                 >
                   Despre Proiect
                 </router-link>
@@ -49,7 +49,7 @@
               <template v-for="story in stories" v-bind:key="story.id">
                 <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
                   <router-link
-                    to=""
+                    :to="`${'/poveste/' +  + story.id }`"
                     class="hover:text-gray-400"
                   >
                     {{story.victimFirstName + ' ' + story.victimLastName}}
