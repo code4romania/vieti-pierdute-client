@@ -6,9 +6,6 @@
         <component
           :is="Component"
         ></component>
-        <!-- <div class="my-64" v-else>
-          <Spinner />
-        </div> -->
       </transition>  
     </router-view>
   
@@ -16,26 +13,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import Spinner from "@/components/Spinner.vue";
-
-export default {
-    name: 'App',
-    components: {
-      Spinner
-    },
-    data() {
-      return {
-        numberDeceased: 0
-      }
-    },
-    mounted() {
-      // axios.get(process.env.VUE_APP_LATEST_DATA + "/smallData.json").then((response) => {
-      //   this.numberDeceased = response.data.currentDayStats.numberDeceased
-      // }).catch(err => {
-      //   console.log(err)
-      // })
-    }
+  export default {
+    name: 'App'
   }
 </script>
 
