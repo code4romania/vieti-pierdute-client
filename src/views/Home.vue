@@ -3,9 +3,9 @@
     <div v-if="loading" class="my-16">
       <Spinner />
     </div>
-    <div v-if="post">
+    <div v-if="page">
       <div
-        v-for="component in post.components"
+        v-for="component in page.components"
         class="py-7 px-5 md:py-9 md:px-10 lg:px-20"
         v-bind:key="component.id"
       >
@@ -71,7 +71,7 @@ export default {
   data: () => ({
     loading: false,
     error: null,
-    post: {
+    page: {
       components: []
     }
   }),
@@ -84,14 +84,14 @@ export default {
   },
   methods: {
     fetchData() {
-      this.error = this.post = null;
+      this.error = this.page = null;
       this.loading = true;
-      api.get("/pages?slug=home", (err, post) => {
+      api.getPage("home", (err, page) => {
         this.loading = false;
         if (err) {
           this.error = err.toString();
         } else {
-          this.post = post;
+          this.page = page;
         }
       });
     }

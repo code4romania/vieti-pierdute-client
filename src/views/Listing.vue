@@ -1,8 +1,15 @@
 <template>
 
   <div class="flex flex-col flex-1 bg-black text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
-    <div class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto">
-      <div class="flex-1 lg:flex ">
+    <div
+      v-if="page"
+      class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto"
+    >
+      <div
+        class="flex-1 lg:flex "
+        v-for="component in page.components"
+        v-bind:key="component.id"
+      >
         <div class="lg:w-1/3">
           <div class="listing-aside lg:fixed flex flex-col h-full lg:py-9">
             <div class="mb-6 lg:mb-0 flex-1">
@@ -18,26 +25,51 @@
               <router-link
                 to="/"
                 class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
+                v-if="component.victimsCount"
               >
-                <span class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"></span>
-                123456
+                <span
+                  class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
+                ></span>
+                {{ (+component.victimsCount.victims).toLocaleString() }}
               </router-link>
 
-              <p class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80">This is a content area describing the web purpose and what users will find on it. It is cool to keep it short but explanatory</p>
+              <p
+                class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80"
+              >
+                {{ component.content }}
+              </p>
 
               <div class="mb-8 hidden lg:block">
-                <button class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest" :class="{'opacity-60 border-r-0': list}">Galerie</button>
-                <button class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest" :class="{'opacity-60 border-l-0': gallery}">Listă</button>
+                <button
+                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                  :class="{ 'opacity-60 border-r-0': list }"
+                >
+                  Galerie
+                </button>
+                <button
+                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                  :class="{ 'opacity-60 border-l-0': gallery }"
+                >
+                  Listă
+                </button>
               </div>
 
-              <router-link
-                to="/adauga-o-poveste"
-                class="lg:block inline-block mb-2 py-3 underline text-2xl font-normal lg:text-xl lg:mb-4"
+              <ul
+                  v-if="component.buttons"
+                  class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
               >
-                Adaugă povestea cuiva drag
-              </router-link>
+                <li v-for="button in component.buttons" v-bind:key="button.id">
+                  <router-link
+                      v-if="button.href"
+                      :to="button.href"
+                      class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
+                  ><span class="underline">{{ button.text }}</span
+                  ><span class="pl-4">&#8594;</span></router-link
+                  >
+                </li>
+              </ul>
             </div>
-            <MadeBy class="hidden lg:block"/>
+            <MadeBy class="hidden lg:block" />
           </div>
         </div>
         <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
@@ -58,7 +90,10 @@
               </template>
               <!-- <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed text-gray-400">*** ****** ******</li> -->
             </ul>
-            <div v-else class="flex flex-col justify-center align-middle h-full">
+            <div
+              v-else
+              class="flex flex-col justify-center align-middle h-full"
+            >
               <Spinner />
             </div>
           </transition>
@@ -73,12 +108,10 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import axios from "axios";
-
+import api from "@/api";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 
@@ -92,25 +125,48 @@ export default {
     return {
       list: true,
       gallery: false,
-      stories: []
-    }
+      stories: [],
+      storiesError: null,
+      storiesLoading: false,
+      page: null,
+      pageError: null,
+      pageLoading: false
+    };
   },
   computed: {
-    wrappedStories () {
-      return [1, 2, 3]
+    wrappedStories() {
+      return [1, 2, 3];
     }
   },
   mounted() {
-    axios.get(process.env.VUE_APP_API + "/stories").then((response) => {
-      this.stories = response.data
-    })
+    this.pageError = null;
+    this.pageLoading = true;
+    api.getPage("listing", (err, page) => {
+      this.pageLoading = false;
+      if (err) {
+        this.pageError = err.toString();
+      } else {
+        this.page = page;
+      }
+    });
+
+    this.storiesError = null;
+    this.storiesLoading = true;
+    api.getStories((err, stories) => {
+      this.storiesLoading = false;
+      if (err) {
+        this.storiesError = err.toString();
+      } else {
+        this.stories = stories;
+      }
+    });
   },
   methods: {
     dottedName() {
-      return "*** ****** ******"
+      return "*** ****** ******";
     }
   }
-}
+};
 </script>
 
 <style scoped>
