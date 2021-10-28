@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="loading">loading...</div>
+    <div v-if="loading" class="my-16">
+      <Spinner />
+    </div>
     <div v-if="post">
       <div
         v-for="component in post.components"
@@ -14,7 +16,7 @@
             <div class="md:flex-1">
               <nav id="nav">
                 <router-link
-                  to="/about"
+                  to="/despre"
                   class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
                   >Despre Proiect</router-link
                 >
@@ -58,11 +60,13 @@
 <script>
 import api from "@/api";
 import MadeBy from "@/components/MadeBy.vue";
+import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "Home",
   components: {
-    MadeBy
+    MadeBy,
+    Spinner
   },
   data: () => ({
     loading: false,

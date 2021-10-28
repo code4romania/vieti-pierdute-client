@@ -5,7 +5,7 @@
     <div class="flex-1 max-w-screen-2xl lg:mx-auto w-full">
       <nav id="nav">
         <router-link
-          to="/about"
+          to="/despre"
           class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
         >Despre Proiect</router-link>
       </nav>

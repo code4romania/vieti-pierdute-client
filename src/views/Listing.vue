@@ -20,7 +20,7 @@
                 class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
               >
                 <span class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"></span>
-                {{formatNumber(numberDeceased)}}
+                123456
               </router-link>
 
               <p class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80">This is a content area describing the web purpose and what users will find on it. It is cool to keep it short but explanatory</p>
@@ -89,12 +89,6 @@ export default {
     MadeBy,
     Spinner
   },
-  props: {
-    numberDeceased: {
-      type: Number,
-      default: 0
-    }
-  },
   data: () => {
     return {
       list: true,
@@ -104,7 +98,6 @@ export default {
   },
   computed: {
     wrappedStories () {
-
       return [1, 2, 3]
     }
   },
