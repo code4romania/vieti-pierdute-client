@@ -53,16 +53,16 @@
               </div>
 
               <ul
-                  v-if="component.buttons"
-                  class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
+                v-if="component.buttons"
+                class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
               >
                 <li v-for="button in component.buttons" v-bind:key="button.id">
                   <router-link
-                      v-if="button.href"
-                      :to="button.href"
-                      class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
-                  ><span class="underline">{{ button.text }}</span
-                  ><span class="pl-4">&#8594;</span></router-link
+                    v-if="button.href"
+                    :to="button.href"
+                    class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
+                    ><span class="underline">{{ button.text }}</span
+                    ><span class="pl-4">&#8594;</span></router-link
                   >
                 </li>
               </ul>
@@ -73,17 +73,19 @@
         <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
           <transition name="listing-transition">
             <ul
-              v-if="stories.length > 0"
+              v-if="storiesList.length > 0"
               class="listing-list md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
             >
-              <template v-for="story in stories" v-bind:key="story.id">
+              <template v-for="story in storiesList" v-bind:key="story.id">
                 <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
-                  <router-link to="" class="hover:text-gray-400">
-                    {{ story.victimFirstName + " " + story.victimLastName }}
-                  </router-link>
+                  <component
+                    :is="story.url ? 'router-link' : 'div'"
+                    :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
+                    :to="story.url"
+                    >{{ story.title }}
+                  </component>
                 </li>
               </template>
-              <!-- <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed text-gray-400">*** ****** ******</li> -->
             </ul>
             <div
               v-else
@@ -107,6 +109,7 @@
 
 <script>
 import api from "@/api";
+import shuffle from "@/lib/shuffle";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 
@@ -129,8 +132,21 @@ export default {
     };
   },
   computed: {
-    wrappedStories() {
-      return [1, 2, 3];
+    storiesList: function() {
+      const victimsCount =
+        this.page && +this.page.components[0].victimsCount.victims;
+      const list = this.stories.map(story => ({
+        id: story.id,
+        title: `${story.victimLastName} ${story.victimFirstName}`,
+        url: `/povesti/${story.id}`
+      }));
+      if (victimsCount) {
+        return shuffle([
+          ...list,
+          ...this.placeholdersList(victimsCount - list.length)
+        ]);
+      }
+      return this.placeholdersList(100);
     }
   },
   mounted() {
@@ -157,8 +173,14 @@ export default {
     });
   },
   methods: {
-    dottedName() {
-      return "*** ****** ******";
+    isShort() {
+      return Math.floor(Math.random() * 10) > 5;
+    },
+    placeholdersList(length) {
+      return Array.from({ length }, (_, i) => ({
+        id: `placeholder-${i}`,
+        title: this.isShort() ? "***** *****" : "*** ***** ****"
+      }));
     }
   }
 };
