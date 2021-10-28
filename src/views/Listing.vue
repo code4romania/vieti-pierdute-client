@@ -78,12 +78,14 @@
             >
               <template v-for="story in storiesList" v-bind:key="story.id">
                 <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
-                  <router-link to="" class="hover:text-gray-400">
-                    {{ story.victimFirstName + " " + story.victimLastName }}
-                  </router-link>
+                  <component
+                    :is="story.url ? 'router-link' : 'div'"
+                    :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
+                    :to="story.url"
+                    >{{ story.title }}
+                  </component>
                 </li>
               </template>
-              <!-- <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed text-gray-400">*** ****** ******</li> -->
             </ul>
             <div
               v-else
@@ -107,7 +109,7 @@
 
 <script>
 import api from "@/api";
-import shuffle from '@/lib/shuffle'
+import shuffle from "@/lib/shuffle";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 
@@ -133,8 +135,16 @@ export default {
     storiesList: function() {
       const victimsCount =
         this.page && +this.page.components[0].victimsCount.victims;
-      if(victimsCount){
-        return shuffle([...this.stories, ...this.placeholdersList(victimsCount)]);
+      const list = this.stories.map(story => ({
+        id: story.id,
+        title: `${story.victimLastName} ${story.victimFirstName}`,
+        url: `/povesti/${story.id}`
+      }));
+      if (victimsCount) {
+        return shuffle([
+          ...list,
+          ...this.placeholdersList(victimsCount - list.length)
+        ]);
       }
       return this.placeholdersList(100);
     }
@@ -163,12 +173,13 @@ export default {
     });
   },
   methods: {
-    isShort () { return Math.floor(Math.random()*10) > 5},
+    isShort() {
+      return Math.floor(Math.random() * 10) > 5;
+    },
     placeholdersList(length) {
       return Array.from({ length }, (_, i) => ({
         id: `placeholder-${i}`,
-        victimFirstName: this.isShort() ? "*****" : "*** *****",
-        victimLastName: this.isShort() ? "******": "******"
+        title: this.isShort() ? "***** *****" : "*** ***** ****"
       }));
     }
   }
