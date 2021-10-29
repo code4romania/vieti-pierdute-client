@@ -9,7 +9,7 @@
         class="py-7 px-5 md:py-9 md:px-10 lg:px-20"
         v-bind:key="component.id"
       >
-        <div class="max-w-screen-2xl">
+        <div class="max-w-screen-2xl mx-auto">
           <div class="grid grid-cols-8 gap-16">
             <div class="col-span-full lg:col-span-4">
               <div>
@@ -46,7 +46,7 @@
               <MadeBy />
             </div>
             <div class="col-span-full lg:col-span-4">
-              <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-80 xl:mt-96 ">
+              <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-64 xl:mt-80">
                 {{ component.content }}
               </p>
             </div>

@@ -1,6 +1,9 @@
 <template>
 
   <div class="flex flex-col flex-1 bg-black text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
+    <div v-if="pageLoading" class="my-16">
+      <Spinner />
+    </div>
     <div
       v-if="page"
       class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto"
@@ -166,7 +169,7 @@ export default {
       const list = this.stories.map(story => ({
         id: story.id,
         title: `${story.victimLastName} ${story.victimFirstName}`,
-        url: `/povesti/${story.id}`
+        url: `/poveste/${story.id}`
       }));
       if (victimsCount) {
         return shuffle([
@@ -178,6 +181,17 @@ export default {
     }
   },
   mounted() {
+    this.pageError = null;
+    this.pageLoading = true;
+    api.getPage("listing", (err, page) => {
+      this.pageLoading = false;
+      if (err) {
+        this.pageError = err.toString();
+      } else {
+        this.page = page;
+      }
+    });
+
     this.storiesError = null;
     this.storiesLoading = true;
     api.getStories((err, stories) => {
@@ -188,13 +202,6 @@ export default {
         this.stories = stories;
       }
     });
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => vm.fetchPage());
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchPage();
-    next();
   },
   methods: {
     isShort() {

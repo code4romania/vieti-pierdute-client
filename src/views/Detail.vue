@@ -26,8 +26,23 @@ export default {
   },
   name: "Detail",
   data: () => ({
-    key: "value"
+    story: null,
+    storyError: null,
+    storyLoading: false,
   }),
+  mounted() {
+    this.storyError = null;
+    this.storyLoading = true;
+    // console.log(this.$ro)
+    // api.getStory("listing", (err, story) => {
+    //   this.storyLoading = false;
+    //   if (err) {
+    //     this.storyError = err.toString();
+    //   } else {
+    //     this.story = story;
+    //   }
+    // });
+  },
   methods: {
     
   }

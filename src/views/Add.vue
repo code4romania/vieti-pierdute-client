@@ -21,7 +21,7 @@
         This is a content area describing the web purpose and what users will
         find on it. It is cool to keep it short but explanatory
       </p>
-      <form ref="form" @submit="checkForm">
+      <form ref="form" @submit="checkForm" class=" max-w-4xl">
         <InputGroup>
           <Input
             label="Prenume:"
@@ -108,7 +108,6 @@
         </InputGroup>
         <input type="submit" value=" Trimite povestea" />
       </form>
-      <MadeBy />
     </div>
   </div>
 </template>
@@ -118,10 +117,9 @@ import Heading from "../components/Heading";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
 import Checkbox from "../components/Checkbox";
-import MadeBy from "../components/MadeBy";
 
 export default {
-  components: { MadeBy, InputGroup, Heading, Input, Checkbox },
+  components: { InputGroup, Heading, Input, Checkbox },
   data: () => ({
     story: {
       victimFirstName: null,
