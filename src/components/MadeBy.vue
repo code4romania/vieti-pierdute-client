@@ -1,5 +1,5 @@
 <template>
-  <div class="MadeBy mt-10 font-sans">
+  <div class="MadeBy font-sans">
     <div class="inline-block mr-10">
       <div class="mb-2 uppercase text-xs tracking-wider opacity-60">Un Proiect</div>
       <a href="https://www.dor.ro/" class="inline-block py-4 opacity-60 hover:opacity-100" target="_blank">

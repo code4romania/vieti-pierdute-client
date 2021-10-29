@@ -36,14 +36,14 @@
                     <router-link
                       v-if="button.href"
                       :to="button.href"
-                      class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
+                      class="inline-block mb-2 py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
                       ><span class="underline">{{ button.text }}</span
                       ><span class="pl-4">&#8594;</span></router-link
                     >
                   </li>
                 </ul>
+                <MadeBy />
               </div>
-              <MadeBy />
             </div>
             <div class="col-span-full lg:col-span-4">
               <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-64 xl:mt-80">
@@ -81,6 +81,10 @@ export default {
   beforeRouteUpdate(to, from, next) {
     this.fetchData();
     next();
+  },
+  mounted() {
+    document.body.classList.remove("bg-white", "text-black");
+    document.body.classList.add("bg-black", "text-white");
   },
   methods: {
     fetchData() {

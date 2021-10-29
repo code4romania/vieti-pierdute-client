@@ -10,8 +10,14 @@
         v-bind:key="component.id"
       >
         <div class="container max-w-screen-2xl mx-auto">
-          <div class="grid grid-cols-8 gap-16 h-full">
-            <div class="col-span-full lg:col-span-4">a</div>
+          <div class="grid grid-cols-8 gap-16">
+            <div class="col-span-full lg:col-span-4 relative">
+              <router-link to="/" class="absolute z-10 top-3 right-0 w-12 h-12">
+                <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-full h-0.5 bg-black rotate-45"></span>
+                <span class="block w-0 h-0 overflow-hidden">Închide</span>
+                <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-0.5 h-full bg-black rotate-45"></span>
+              </router-link>
+            </div>
             <div class="col-span-full lg:col-span-4">b</div>
           </div>
         </div>
@@ -41,12 +47,6 @@
       <a href="" class="inline-block mb-2 py-3 text-2xl font-normal underline lg:text-2xl xl:text-3xl lg:mb-4">Politica de Confidentialitate</a><br>
       <a href="" class="inline-block mb-2 py-3 text-2xl font-normal underline lg:text-2xl xl:text-3xl lg:mb-4">Other Link</a>
 
-      <router-link to="/" class="absolute z-10 top-3 right-0 w-12 h-12">
-        <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-full h-0.5 bg-black rotate-45"></span>
-        <span class="block w-0 h-0 overflow-hidden">Înapoi Acasă</span>
-        <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-0.5 h-full bg-black rotate-45"></span>
-      </router-link>
-
     </div>
   </div> -->
 
@@ -70,27 +70,31 @@ export default {
       components: []
     }
   }),
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => vm.fetchData());
-  // },
-  // beforeRouteUpdate(to, from, next) {
-  //   this.fetchData();
-  //   next();
-  // },
-  // methods: {
-  //   fetchData() {
-  //     this.error = this.page = null;
-  //     this.loading = true;
-  //     api.getPage("about", (err, page) => {
-  //       this.loading = false;
-  //       if (err) {
-  //         this.error = err.toString();
-  //       } else {
-  //         this.page = page;
-  //       }
-  //     });
-  //   }
-  // }
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.fetchData());
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.fetchData();
+    next();
+  },
+  mounted() {
+    document.body.classList.remove("bg-black", "text-white");
+    document.body.classList.add("bg-white", "text-black");
+  },
+  methods: {
+    fetchData() {
+      this.error = this.page = null;
+      this.loading = true;
+      api.getPage("about", (err, page) => {
+        this.loading = false;
+        if (err) {
+          this.error = err.toString();
+        } else {
+          this.page = page;
+        }
+      });
+    }
+  }
 }
 </script>
 

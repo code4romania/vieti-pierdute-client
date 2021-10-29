@@ -1,114 +1,107 @@
 <template>
-
-  <div class="flex flex-col flex-1 bg-black text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
+  <div>
     <div v-if="pageLoading" class="my-16">
       <Spinner />
     </div>
-    <div
-      v-if="page"
-      class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto"
-    >
+    <div v-if="page">
       <div
-        class="flex-1 lg:flex "
         v-for="component in page.components"
+        class="py-7 px-5 md:py-9 md:px-10 lg:px-20"
         v-bind:key="component.id"
       >
-        <div class="lg:w-1/3">
-          <div class="listing-aside lg:fixed flex flex-col h-full lg:py-9">
-            <div class="mb-6 lg:mb-0 flex-1">
-              <div>
-                <router-link
-                  to="/despre"
-                  class="inline-block py-3 px-2 font-semibold text-sm tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
-                >
-                  Despre Proiect
-                </router-link>
-              </div>
+        <div class="max-w-screen-2xl mx-auto">
+          <div class="grid grid-cols-8 gap-16">
+            <div class="col-span-full lg:col-span-3">
+              <div class="lg:fixed lg:max-w-xs xl:max-w-md lg:h-full lg:pb-5">
+                <div>
+                  <div>
+                    <router-link
+                      to="/despre"
+                      class="inline-block py-3 px-2 font-semibold text-sm tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
+                    >
+                      Despre Proiect
+                    </router-link>
+                  </div>
 
-              <router-link
-                to="/"
-                class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
-                v-if="component.victimsCount"
-              >
-                <span
-                  class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
-                ></span>
-                {{ (+component.victimsCount.victims).toLocaleString() }}
-              </router-link>
-
-              <p
-                class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80"
-              >
-                {{ component.content }}
-              </p>
-
-              <div class="mb-8 hidden lg:block">
-                <button
-                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                  :class="{ 'opacity-60 border-r-0': list }"
-                >
-                  Galerie
-                </button>
-                <button
-                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                  :class="{ 'opacity-60 border-l-0': gallery }"
-                >
-                  Listă
-                </button>
-              </div>
-
-              <ul
-                v-if="component.buttons"
-                class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
-              >
-                <li v-for="button in component.buttons" v-bind:key="button.id">
                   <router-link
-                    v-if="button.href"
-                    :to="button.href"
-                    class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
-                    ><span class="underline">{{ button.text }}</span
-                    ><span class="pl-4">&#8594;</span></router-link
+                    to="/"
+                    class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
+                    v-if="component.victimsCount"
                   >
-                </li>
-              </ul>
-            </div>
-            <MadeBy class="hidden lg:block" />
-          </div>
-        </div>
-        <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
-          <transition name="listing-transition">
-            <ul
-              v-if="storiesList.length > 0"
-              class="listing-list md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
-            >
-              <template v-for="(story, index) in storiesList" v-bind:key="story.id">
-                <div class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed" v-if="banners[index]">
-                  {{ banners[index].text }}
+                    <span
+                      class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
+                    ></span>
+                    {{ (+component.victimsCount.victims).toLocaleString() }}
+                  </router-link>
+
+                  <p
+                    class="mb-8 text-2xl font-thin text-white text-opacity-80"
+                  >
+                    {{ component.content }}
+                  </p>
+
+                  <ul
+                    v-if="component.buttons"
+                    class="mb-8"
+                  >
+                    <li v-for="button in component.buttons" v-bind:key="button.id">
+                      <router-link
+                        v-if="button.href"
+                        :to="button.href"
+                        class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
+                        ><span class="underline">{{ button.text }}</span></router-link
+                      >
+                    </li>
+                  </ul>
+
+                  <div class="lg:mb-16">
+                    <button
+                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                      :class="{ 'opacity-60 border-r-0': listView }"
+                    >
+                      Galerie
+                    </button>
+                    <button
+                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                      :class="{ 'opacity-60 border-l-0': galleryView }"
+                    >
+                      Listă
+                    </button>
+                  </div>
+
+                  <MadeBy class="hidden lg:block" />
                 </div>
-                <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
-                  <component
-                    :is="story.url ? 'router-link' : 'div'"
-                    :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
-                    :to="story.url"
-                    >{{ story.title }}
-                  </component>
-                </li>
-              </template>
-            </ul>
-            <div
-              v-else
-              class="flex flex-col justify-center align-middle h-full"
-            >
-              <Spinner />
+              </div>
             </div>
-          </transition>
-          <!-- <transition name="listing-transition">
-            <div v-show="gallery">
-              <ul>
-                <li>max max max super max max super super max max max super max max</li>
-              </ul>
+            <div class="col-span-full lg:col-span-5">
+              <transition v-if="listView" name="listing-transition">
+                <ul
+                  v-if="storiesList.length > 0"
+                  class="listing-list md:flex md:flex-row md:flex-wrap lg:pb-40"
+                >
+                  <template v-for="(story, index) in storiesList" v-bind:key="story.id">
+                    <div class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed" v-if="banners[index]">
+                      {{ banners[index].text }}
+                    </div>
+                    <li class="md:w-1/2 py-2 text-2xl leading-snug">
+                      <component
+                        :is="story.url ? 'router-link' : 'div'"
+                        :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
+                        :to="story.url"
+                        >{{ story.title }}
+                      </component>
+                    </li>
+                  </template>
+                </ul>
+                <div
+                  v-else
+                  class="flex flex-col justify-center align-middle h-full"
+                >
+                  <Spinner />
+                </div>
+              </transition>
             </div>
-          </transition> -->
+          </div>
         </div>
       </div>
     </div>
@@ -129,8 +122,8 @@ export default {
   },
   data: () => {
     return {
-      list: true,
-      gallery: false,
+      listView: true,
+      galleryView: false,
       stories: [],
       storiesError: null,
       storiesLoading: false,
@@ -202,6 +195,9 @@ export default {
         this.stories = stories;
       }
     });
+
+    document.body.classList.remove("bg-white", "text-black");
+    document.body.classList.add("bg-black", "text-white");
   },
   methods: {
     isShort() {
