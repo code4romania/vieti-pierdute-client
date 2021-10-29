@@ -74,21 +74,35 @@
           <transition name="listing-transition">
             <ul
               v-if="storiesList.length > 0"
-              class="listing-list md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
+              class="listing-list h-screen md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
             >
-              <template v-for="(story, index) in storiesList" v-bind:key="story.id">
-                <div class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed" v-if="banners[index]">
+              <div
+                class="w-full flex flex-col"
+                v-for="(row, index) in storiesList"
+                v-bind:key="row.id"
+              >
+                <div
+                  class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed"
+                  v-if="banners[index]"
+                >
                   {{ banners[index].text }}
                 </div>
-                <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
-                  <component
-                    :is="story.url ? 'router-link' : 'div'"
-                    :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
-                    :to="story.url"
-                    >{{ story.title }}
-                  </component>
-                </li>
-              </template>
+                <div class="flex w-full">
+                  <li
+                    class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed"
+                    v-for="story in row.stories"
+                  >
+                    <component
+                      :is="story.url ? 'router-link' : 'div'"
+                      :class="
+                        story.url ? 'hover:text-gray-400' : 'text-gray-400'
+                      "
+                      :to="story.url"
+                      >{{ story.title }}
+                    </component>
+                  </li>
+                </div>
+              </div>
             </ul>
             <div
               v-else
@@ -166,13 +180,29 @@ export default {
         title: `${story.victimLastName} ${story.victimFirstName}`,
         url: `/povesti/${story.id}`
       }));
+      const rows =
+        this.stories &&
+        shuffle([
+          ...list,
+          ...this.placeholdersList(victimsCount - list.length)
+        ]).reduce((result, item, i) => {
+          const rowIndex = Math.floor(i / 2);
+          if (result && result[rowIndex]) {
+            result[rowIndex].stories.push(item);
+          } else {
+            result.push({ stories: [item], index: rowIndex });
+          }
+          return result;
+        }, []);
+
+      return rows;
+
       if (victimsCount) {
         return shuffle([
           ...list,
           ...this.placeholdersList(victimsCount - list.length)
         ]);
       }
-      return this.placeholdersList(100);
     }
   },
   mounted() {
