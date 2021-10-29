@@ -20,8 +20,10 @@ const getMany = (path, cb) =>
 
 const getPage = (slug, cb) => getOne(`/pages?slug=${slug}`, cb);
 const getStories = (cb) => getMany('/stories', cb);
+const getBanners = (cb) => getMany('/banners', cb);
 
 export default {
   getPage,
-  getStories
+  getStories,
+  getBanners
 };

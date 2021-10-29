@@ -4,7 +4,7 @@
       class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed"
       v-if="banner"
     >
-      {{ banner.text }}
+      {{ banner.content }}
     </div>
     <div class="flex w-full flex-col md:flex-row">
       <div

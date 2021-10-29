@@ -86,7 +86,7 @@
                   :size-dependencies="[item.stories]"
                   :data-index="index"
                 >
-                  <Item :row="item" :banner="banners[index]" />
+                  <Item :row="item" :banner="bannersList[index]" />
                 </DynamicScrollerItem>
               </template>
             </DynamicScroller>
@@ -135,32 +135,23 @@ export default {
       page: null,
       pageError: null,
       pageLoading: false,
-      banners: {
-        120: {
-          text: "banner index 120"
-        },
-        230: {
-          text: "banner index 230"
-        },
-        460: {
-          text: "banner index 460"
-        },
-        850: {
-          text: "banner index 850"
-        },
-        1200: {
-          text: "banner index 1200"
-        },
-        1600: {
-          text: "banner index 1600"
-        },
-        2300: {
-          text: "banner index 2300"
-        }
-      }
+      banners: [],
+      bannersError: null,
+      bannersLoading: false
     };
   },
   computed: {
+    bannersList: function() {
+      return this.banners.reduce(
+        (o, key) => ({
+          ...o,
+          [key.index]: {
+            content: key.content
+          }
+        }),
+        {}
+      );
+    },
     storiesList: function() {
       const victimsCount =
         this.page && +this.page.components[0].victimsCount.victims;
@@ -172,18 +163,18 @@ export default {
       const rows =
         this.stories.length > 0 &&
         victimsCount &&
-        [...shuffle([...list, ...this.placeholdersList(list.length * 4)]), ...this.placeholdersList((victimsCount - list.length * 5))].reduce(
-          (result, item, i) => {
-            const rowIndex = Math.floor(i / 2);
-            if (result && result[rowIndex]) {
-              result[rowIndex].stories.push(item);
-            } else {
-              result.push({ stories: [item], index: rowIndex });
-            }
-            return result;
-          },
-          []
-        );
+        [
+          ...shuffle([...list, ...this.placeholdersList(list.length * 4)]),
+          ...this.placeholdersList(victimsCount - list.length * 5)
+        ].reduce((result, item, i) => {
+          const rowIndex = Math.floor(i / 2);
+          if (result && result[rowIndex]) {
+            result[rowIndex].stories.push(item);
+          } else {
+            result.push({ stories: [item], index: rowIndex });
+          }
+          return result;
+        }, []);
 
       return rows;
     }
@@ -208,6 +199,18 @@ export default {
         this.storiesError = err.toString();
       } else {
         this.stories = stories;
+      }
+    });
+
+    this.bannersError = null;
+    this.bannersLoading = true;
+    api.getBanners((err, banners) => {
+      console.log("banners", banners);
+      this.bannersLoading = false;
+      if (err) {
+        this.bannersError = err.toString();
+      } else {
+        this.banners = banners;
       }
     });
   },
