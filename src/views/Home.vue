@@ -16,7 +16,7 @@
                 <div>
                   <router-link
                     to="/despre"
-                    class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
+                    class="inline-block py-3 px-2 font-semibold text-sm tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
                     >Despre Proiect</router-link
                   >
                 </div>

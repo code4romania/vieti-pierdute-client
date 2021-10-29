@@ -26,9 +26,6 @@
 
 <script>
   export default {
-    name: 'MadeBy',
-    props: {
-      msg: String
-    }
+    name: 'MadeBy'
   }
 </script>

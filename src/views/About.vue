@@ -10,7 +10,7 @@
         v-bind:key="component.id"
       >
         <div class="container max-w-screen-2xl mx-auto">
-          <div class="grid grid-cols-8 gap-16">
+          <div class="grid grid-cols-8 gap-16 h-full">
             <div class="col-span-full lg:col-span-4">a</div>
             <div class="col-span-full lg:col-span-4">b</div>
           </div>
@@ -70,27 +70,27 @@ export default {
       components: []
     }
   }),
-  beforeRouteEnter(to, from, next) {
-    next(vm => vm.fetchData());
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchData();
-    next();
-  },
-  methods: {
-    fetchData() {
-      this.error = this.page = null;
-      this.loading = true;
-      api.getPage("about", (err, page) => {
-        this.loading = false;
-        if (err) {
-          this.error = err.toString();
-        } else {
-          this.page = page;
-        }
-      });
-    }
-  }
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => vm.fetchData());
+  // },
+  // beforeRouteUpdate(to, from, next) {
+  //   this.fetchData();
+  //   next();
+  // },
+  // methods: {
+  //   fetchData() {
+  //     this.error = this.page = null;
+  //     this.loading = true;
+  //     api.getPage("about", (err, page) => {
+  //       this.loading = false;
+  //       if (err) {
+  //         this.error = err.toString();
+  //       } else {
+  //         this.page = page;
+  //       }
+  //     });
+  //   }
+  // }
 }
 </script>
 

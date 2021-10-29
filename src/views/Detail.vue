@@ -10,19 +10,21 @@
         </router-link>
       </div>
 
-      test
+      {{story}}
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api";
+
 import Heading from "../components/Heading";
 import MadeBy from "../components/MadeBy";
 
 export default {
   components: {
     Heading,
-    MadeBy
+    MadeBy,
   },
   name: "Detail",
   data: () => ({
@@ -33,18 +35,17 @@ export default {
   mounted() {
     this.storyError = null;
     this.storyLoading = true;
-    // console.log(this.$ro)
-    // api.getStory("listing", (err, story) => {
-    //   this.storyLoading = false;
-    //   if (err) {
-    //     this.storyError = err.toString();
-    //   } else {
-    //     this.story = story;
-    //   }
-    // });
-  },
-  methods: {
-    
+    if(this.$route.params.storyId) {
+      api.getStory(this.$route.params.storyId, (err, story) => {
+        this.storyLoading = false;
+        console.log(err, story)
+        if (err) {
+          this.storyError = err.toString();
+        } else {
+          this.story = story;
+        }
+      });
+    }
   }
 };
 </script>
