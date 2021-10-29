@@ -76,7 +76,10 @@
               v-if="storiesList.length > 0"
               class="listing-list md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"
             >
-              <template v-for="story in storiesList" v-bind:key="story.id">
+              <template v-for="(story, index) in storiesList" v-bind:key="story.id">
+                <div class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed" v-if="banners[index]">
+                  {{ banners[index].text }}
+                </div>
                 <li class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed">
                   <component
                     :is="story.url ? 'router-link' : 'div'"
@@ -128,7 +131,30 @@ export default {
       storiesLoading: false,
       page: null,
       pageError: null,
-      pageLoading: false
+      pageLoading: false,
+      banners: {
+        120: {
+          text: "banner index 120"
+        },
+        230: {
+          text: "banner index 230"
+        },
+        460: {
+          text: "banner index 460"
+        },
+        850: {
+          text: "banner index 850"
+        },
+        1200: {
+          text: "banner index 1200"
+        },
+        1600: {
+          text: "banner index 1600"
+        },
+        2300: {
+          text: "banner index 2300"
+        }
+      }
     };
   },
   computed: {
