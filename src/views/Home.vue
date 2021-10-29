@@ -9,7 +9,7 @@
         class="py-7 px-5 md:py-9 md:px-10 lg:px-20"
         v-bind:key="component.id"
       >
-        <div class="container max-w-screen-2xl mx-auto">
+        <div class="max-w-screen-2xl">
           <div class="grid grid-cols-8 gap-16">
             <div class="col-span-full lg:col-span-4">
               <div>
@@ -20,7 +20,7 @@
                     >Despre Proiect</router-link
                   >
                 </div>
-                <h1 class="mt-12 mb-4 text-8xl font-light lg:text-9xl xl:text-10xl">
+                <h1 class="mt-12 mb-2 text-8xl font-light lg:text-9xl xl:text-10xl">
                   {{ (+component.victimsCount.victims).toLocaleString() }}
                 </h1>
                 <h2
@@ -30,7 +30,7 @@
                 </h2>
                 <ul
                   v-if="component.buttons"
-                  class="mt-2 lg:mt-8 xl:mt-10"
+                  class="mb-8"
                 >
                   <li v-for="button in component.buttons" v-bind:key="button.id">
                     <router-link

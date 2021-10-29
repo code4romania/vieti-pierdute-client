@@ -139,17 +139,6 @@ export default {
     }
   },
   mounted() {
-    this.pageError = null;
-    this.pageLoading = true;
-    api.getPage("listing", (err, page) => {
-      this.pageLoading = false;
-      if (err) {
-        this.pageError = err.toString();
-      } else {
-        this.page = page;
-      }
-    });
-
     this.storiesError = null;
     this.storiesLoading = true;
     api.getStories((err, stories) => {
@@ -161,9 +150,28 @@ export default {
       }
     });
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.fetchPage());
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.fetchPage();
+    next();
+  },
   methods: {
     dottedName() {
       return "*** ****** ******";
+    },
+    fetchPage() {
+      this.pageError = null;
+      this.pageLoading = true;
+      api.getPage("listing", (err, page) => {
+        this.pageLoading = false;
+        if (err) {
+          this.pageError = err.toString();
+        } else {
+          this.page = page;
+        }
+      });
     }
   }
 };
