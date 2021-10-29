@@ -6,7 +6,7 @@
     >
       {{ banner.text }}
     </div>
-    <div class="flex w-full">
+    <div class="flex w-full flex-col md:flex-row">
       <div
         v-if="row"
         class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed"
