@@ -73,33 +73,32 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-full lg:col-span-5">
-              <transition v-if="listView" name="listing-transition">
-                <ul
+            <div class="col-span-full lg:relative lg:col-span-5">
+              <transition name="listing-transition">
+                <DynamicScroller
                   v-if="storiesList.length > 0"
-                  class="listing-list md:flex md:flex-row md:flex-wrap lg:pb-40"
+                  :items="storiesList"
+                  :min-item-size="64"
+                  class="h-screen"
+                  key-field="index"
                 >
-                  <template v-for="(story, index) in storiesList" v-bind:key="story.id">
-                    <div class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed" v-if="banners[index]">
-                      {{ banners[index].text }}
-                    </div>
-                    <li class="md:w-1/2 py-2 text-2xl leading-snug">
-                      <component
-                        :is="story.url ? 'router-link' : 'div'"
-                        :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
-                        :to="story.url"
-                        >{{ story.title }}
-                      </component>
-                    </li>
+                  <template v-slot="{ item, index, active }">
+                    <DynamicScrollerItem
+                      :item="item"
+                      :active="active"
+                      :size-dependencies="[item.stories]"
+                      :data-index="index"
+                    >
+                      <Item :row="item" :banner="bannersList[index]" />
+                    </DynamicScrollerItem>
                   </template>
-                </ul>
+                </DynamicScroller>
                 <div
                   v-else
                   class="flex flex-col justify-center align-middle h-full"
                 >
                   <Spinner />
                 </div>
-              </transition>
             </div>
           </div>
         </div>
@@ -109,16 +108,19 @@
 </template>
 
 <script>
+import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 import api from "@/api";
 import shuffle from "@/lib/shuffle";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
+import Item from "@/components/Item.vue";
 
 export default {
   name: "Listing",
   components: {
     MadeBy,
-    Spinner
+    Spinner,
+    Item
   },
   data: () => {
     return {
@@ -130,32 +132,23 @@ export default {
       page: null,
       pageError: null,
       pageLoading: false,
-      banners: {
-        120: {
-          text: "banner index 120"
-        },
-        230: {
-          text: "banner index 230"
-        },
-        460: {
-          text: "banner index 460"
-        },
-        850: {
-          text: "banner index 850"
-        },
-        1200: {
-          text: "banner index 1200"
-        },
-        1600: {
-          text: "banner index 1600"
-        },
-        2300: {
-          text: "banner index 2300"
-        }
-      }
+      banners: [],
+      bannersError: null,
+      bannersLoading: false
     };
   },
   computed: {
+    bannersList: function() {
+      return this.banners.reduce(
+        (o, key) => ({
+          ...o,
+          [key.index]: {
+            content: key.content
+          }
+        }),
+        {}
+      );
+    },
     storiesList: function() {
       const victimsCount =
         this.page && +this.page.components[0].victimsCount.victims;
@@ -164,13 +157,23 @@ export default {
         title: `${story.victimLastName} ${story.victimFirstName}`,
         url: `/poveste/${story.id}`
       }));
-      if (victimsCount) {
-        return shuffle([
-          ...list,
-          ...this.placeholdersList(victimsCount - list.length)
-        ]);
-      }
-      return this.placeholdersList(100);
+      const rows =
+        this.stories.length > 0 &&
+        victimsCount &&
+        [
+          ...shuffle([...list, ...this.placeholdersList(list.length * 4)]),
+          ...this.placeholdersList(victimsCount - list.length * 5)
+        ].reduce((result, item, i) => {
+          const rowIndex = Math.floor(i / 2);
+          if (result && result[rowIndex]) {
+            result[rowIndex].stories.push(item);
+          } else {
+            result.push({ stories: [item], index: rowIndex });
+          }
+          return result;
+        }, []);
+
+      return rows;
     }
   },
   mounted() {
@@ -193,6 +196,18 @@ export default {
         this.storiesError = err.toString();
       } else {
         this.stories = stories;
+      }
+    });
+
+    this.bannersError = null;
+    this.bannersLoading = true;
+    api.getBanners((err, banners) => {
+      console.log("banners", banners);
+      this.bannersLoading = false;
+      if (err) {
+        this.bannersError = err.toString();
+      } else {
+        this.banners = banners;
       }
     });
 
@@ -238,11 +253,11 @@ export default {
   padding-right: calc(80px + 20px);
 }
 
-.listing-list li:nth-child(100):before ,
-.listing-list li:nth-child(200):before ,
-.listing-list li:nth-child(300):before ,
-.listing-list li:nth-child(400):before ,
-.listing-list li:nth-child(500):before ,
+.listing-list li:nth-child(100):before,
+.listing-list li:nth-child(200):before,
+.listing-list li:nth-child(300):before,
+.listing-list li:nth-child(400):before,
+.listing-list li:nth-child(500):before,
 .listing-list li:nth-child(600):before {
   position: absolute;
   top: 4px;
@@ -263,12 +278,24 @@ export default {
   color: #fff;
 }
 
-.listing-list li:nth-child(100):before { content: "100"; }
-.listing-list li:nth-child(200):before { content: "200"; }
-.listing-list li:nth-child(300):before { content: "300"; }
-.listing-list li:nth-child(400):before { content: "400"; }
-.listing-list li:nth-child(500):before { content: "500"; }
-.listing-list li:nth-child(600):before { content: "600"; }
+.listing-list li:nth-child(100):before {
+  content: "100";
+}
+.listing-list li:nth-child(200):before {
+  content: "200";
+}
+.listing-list li:nth-child(300):before {
+  content: "300";
+}
+.listing-list li:nth-child(400):before {
+  content: "400";
+}
+.listing-list li:nth-child(500):before {
+  content: "500";
+}
+.listing-list li:nth-child(600):before {
+  content: "600";
+}
 
 @media (min-width: 768px) {
   .listing-list li {
@@ -279,7 +306,6 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
-
   .listing-content:before {
     content: "";
     position: fixed;
@@ -294,11 +320,11 @@ export default {
     background: linear-gradient(to top, rgba(29, 29, 29, 1), transparent);
   }
 
-  .listing-list li:nth-child(100):before ,
-  .listing-list li:nth-child(200):before ,
-  .listing-list li:nth-child(300):before ,
-  .listing-list li:nth-child(400):before ,
-  .listing-list li:nth-child(500):before ,
+  .listing-list li:nth-child(100):before,
+  .listing-list li:nth-child(200):before,
+  .listing-list li:nth-child(300):before,
+  .listing-list li:nth-child(400):before,
+  .listing-list li:nth-child(500):before,
   .listing-list li:nth-child(600):before {
     padding-left: calc(100% - 80px);
   }
@@ -309,9 +335,8 @@ export default {
 }
 
 @media screen and (min-width: 1696px) {
-
   .listing-aside {
-    max-width: calc(1536px/3);
+    max-width: calc(1536px / 3);
   }
 }
 </style>
