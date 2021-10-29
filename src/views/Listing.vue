@@ -72,22 +72,24 @@
         </div>
         <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
           <transition name="listing-transition">
-            <RecycleScroller
+            <DynamicScroller
               v-if="storiesList.length > 0"
-              class="h-screen	 overflow-y-scroll	 scroller"
               :items="storiesList"
+              :min-item-size="64"
+              class="h-screen"
               key-field="index"
-              emit-update
-              v-slot="{ item, index }"
             >
-              <Item :row="item" :banner="banners[index]" />
-            </RecycleScroller>
-            <!--            <ul-->
-            <!--              v-if="storiesList.length > 0"-->
-            <!--              class="listing-list h-screen md:flex md:flex-row md:flex-wrap lg:py-8 lg:pb-40"-->
-            <!--            >-->
-            <!--              <Item v-for="(row, index) in storiesList" :row="row" :banner="banners[index].text" />-->
-            <!--            </ul>-->
+              <template v-slot="{ item, index, active }">
+                <DynamicScrollerItem
+                  :item="item"
+                  :active="active"
+                  :size-dependencies="[item.stories]"
+                  :data-index="index"
+                >
+                  <Item :row="item" :banner="banners[index]" />
+                </DynamicScrollerItem>
+              </template>
+            </DynamicScroller>
             <div
               v-else
               class="flex flex-col justify-center align-middle h-full"
@@ -170,13 +172,13 @@ export default {
       const rows =
         this.stories.length > 0 &&
         victimsCount &&
-        [...list, ...this.placeholdersList(victimsCount - list.length)].reduce(
+        [...shuffle([...list, ...this.placeholdersList(list.length * 4)]), ...this.placeholdersList((victimsCount - list.length * 5))].reduce(
           (result, item, i) => {
             const rowIndex = Math.floor(i / 2);
             if (result && result[rowIndex]) {
               result[rowIndex].stories.push(item);
             } else {
-              result.push({ stories: [item], index: rowIndex, size: 64 });
+              result.push({ stories: [item], index: rowIndex });
             }
             return result;
           },

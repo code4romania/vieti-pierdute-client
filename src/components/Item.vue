@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col h-16">
+  <div class="w-full flex flex-col">
     <div
       class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed"
       v-if="banner"
