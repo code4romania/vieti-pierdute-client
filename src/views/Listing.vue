@@ -99,6 +99,7 @@
                 >
                   <Spinner />
                 </div>
+              </transition>
             </div>
           </div>
         </div>
