@@ -10,9 +10,9 @@
               <div>
                 <router-link
                   to="/despre"
-                  class="inline-block py-3 font-semibold tracking-widest text-black text-opacity-60 uppercase hover:text-opacity-100"
+                  class="inline-block py-3 font-semibold tracking-widest text-black text-opacity-60 hover:text-opacity-100"
                 >
-                  Despre Proiect
+                  Despre proiect
                 </router-link>
               </div>
 

@@ -4,8 +4,8 @@
       <nav id="nav">
         <router-link
           to="/despre"
-          class="inline-block py-3 px-2 font-semibold text-sm tracking-widest text-white text-opacity-60 uppercase hover:text-opacity-100"
-        >Despre Proiect</router-link>
+          class="inline-block py-3 px-2 font-semibold text-sm tracking-wide text-white text-opacity-60 hover:text-opacity-100"
+        >Despre proiect</router-link>
       </nav>
       <Heading :level="1">
         <a @click="$router.go(-1)" class="cursor-pointer">
