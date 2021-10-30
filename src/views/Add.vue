@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col flex-1 bg-black text-white px-5 py-7 md:py-9 md:px-10 lg:px-20">
-    <div class="flex-1 max-w-screen-2xl lg:mx-auto w-full">
-      <nav id="nav">
+  <div>
+    <div class="max-w-screen-2xl mx-auto">
+      <div>
         <router-link
           to="/despre"
           class="inline-block py-3 px-2 font-semibold text-sm tracking-wide text-white text-opacity-60 hover:text-opacity-100"
         >Despre proiect</router-link>
-      </nav>
+      </div>
       <Heading :level="1">
         <a @click="$router.go(-1)" class="cursor-pointer">
           <span

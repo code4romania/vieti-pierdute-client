@@ -6,7 +6,6 @@
     <div v-if="page">
       <div
         v-for="component in page.components"
-        class="py-7 px-5 md:py-9 md:px-10 lg:px-20 bg-white text-black"
         v-bind:key="component.id"
       >
         <div class="container max-w-screen-2xl mx-auto">
