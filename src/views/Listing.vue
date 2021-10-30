@@ -41,12 +41,20 @@
                 <button
                   class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
                   :class="{ 'opacity-60 border-r-0': list }"
+                  @click="
+                    gallery = true;
+                    list = false;
+                  "
                 >
                   Galerie
                 </button>
                 <button
                   class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
                   :class="{ 'opacity-60 border-l-0': gallery }"
+                  @click="
+                    list = true;
+                    gallery = false;
+                  "
                 >
                   Listă
                 </button>
@@ -73,10 +81,11 @@
         <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
           <transition name="listing-transition">
             <DynamicScroller
+              v-show="list"
               v-if="storiesList.length > 0"
               :items="storiesList"
               :min-item-size="64"
-              class="h-screen"
+              class="listing-list h-screen"
               key-field="index"
             >
               <template v-slot="{ item, index, active }">
@@ -97,13 +106,34 @@
               <Spinner />
             </div>
           </transition>
-          <!-- <transition name="listing-transition">
+          <transition name="listing-transition">
             <div v-show="gallery">
-              <ul>
-                <li>max max max super max max super super max max max super max max</li>
-              </ul>
+              <DynamicScroller
+                v-if="storiesList.length > 0"
+                :items="storiesList"
+                :min-item-size="64"
+                class="listing-list h-screen"
+                key-field="index"
+              >
+                <template v-slot="{ item, index, active }">
+                  <DynamicScrollerItem
+                    :item="item"
+                    :active="active"
+                    :size-dependencies="[item.stories]"
+                    :data-index="index"
+                  >
+                    <Card :row="item" />
+                  </DynamicScrollerItem>
+                </template>
+              </DynamicScroller>
+              <div
+                v-else
+                class="flex flex-col justify-center align-middle h-full"
+              >
+                <Spinner />
+              </div>
             </div>
-          </transition> -->
+          </transition>
         </div>
       </div>
     </div>
@@ -117,13 +147,15 @@ import shuffle from "@/lib/shuffle";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 import Item from "@/components/Item.vue";
+import Card from "@/components/Card.vue";
 
 export default {
   name: "Listing",
   components: {
     MadeBy,
     Spinner,
-    Item
+    Item,
+    Card
   },
   data: () => {
     return {
@@ -158,6 +190,9 @@ export default {
       const list = this.stories.map(story => ({
         id: story.id,
         title: `${story.victimLastName} ${story.victimFirstName}`,
+        age: story.age,
+        occupation: story.occupation,
+        address: `${story.county}, ${story.city}`,
         url: `/povesti/${story.id}`
       }));
       const rows =
@@ -295,6 +330,20 @@ export default {
 }
 .listing-list li:nth-child(600):before {
   content: "600";
+}
+
+.listing-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.listing-list::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+.listing-list::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 20px;
 }
 
 @media (min-width: 768px) {
