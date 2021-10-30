@@ -1,114 +1,116 @@
 <template>
   <div>
     <div class="max-w-screen-2xl mx-auto">
-      <div>
-        <router-link
-          to="/despre"
-          class="inline-block py-3 px-2 font-semibold text-sm tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-        >Despre proiect</router-link>
-      </div>
-      <Heading :level="1">
-        <a @click="$router.go(-1)" class="cursor-pointer">
-          <span
-            class="absolute left-0 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
-          ></span>
-        </a>
-        <span class="pl-10">
-          Adaugă povestea cuiva drag
-        </span>
-      </Heading>
-      <p class="text-2xl font-light mb-10">
-        This is a content area describing the web purpose and what users will
-        find on it. It is cool to keep it short but explanatory
-      </p>
-      <form ref="form" @submit="checkForm" class=" max-w-4xl">
-        <InputGroup>
-          <Input
-            label="Prenume:"
-            placeholder="Andrei"
-            name="victimFirstName"
-            v-model="story.victimFirstName"
-          />
-          <Input
-            label="Nume:"
-            placeholder="Popescu"
-            name="victimLastName"
-            v-model="story.victimLastName"
-          />
-        </InputGroup>
-        <InputGroup>
-          <Input label="Vârsta:" name="age" placeholder="47" v-model="story.age" />
-          <Input
-            label="Ocupatie:"
-            name="occupation"
-            placeholder="sau ce ii placea sa faca?"
-            v-model="story.occupation"
-          />
-        </InputGroup>
-        <InputGroup>
-          <Input
-            label="Județ:"
-            name="city"
-            placeholder="Alege judetul"
-            v-model="story.city"
-          />
-          <Input
-            label="Localitate:"
-            name="county"
-            placeholder="Alege localitatea"
-            v-model="story.county"
-          />
-        </InputGroup>
-        <Input
-          label="Scrie-ne povestea lui"
-          name="content"
-          type="textarea"
-          v-model="story.content"
-        />
-        <Heading :level="3">Datele tale</Heading>
+      <div class="p-4 lg:p-8">
+        <div>
+          <router-link
+            to="/despre"
+            class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
+          >Despre proiect</router-link>
+        </div>
+        <Heading :level="1">
+          <a @click="$router.go(-1)" class="cursor-pointer">
+            <span
+              class="absolute left-0 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
+            ></span>
+          </a>
+          <div class="pl-10">
+            Adaugă povestea cuiva drag
+          </div>
+        </Heading>
         <p class="text-2xl font-light mb-10">
           This is a content area describing the web purpose and what users will
           find on it. It is cool to keep it short but explanatory
         </p>
-        <InputGroup>
+        <form ref="form" @submit="checkForm" class=" max-w-4xl">
+          <InputGroup>
+            <Input
+              label="Prenume:"
+              placeholder="Andrei"
+              name="victimFirstName"
+              v-model="story.victimFirstName"
+            />
+            <Input
+              label="Nume:"
+              placeholder="Popescu"
+              name="victimLastName"
+              v-model="story.victimLastName"
+            />
+          </InputGroup>
+          <InputGroup>
+            <Input label="Vârsta:" name="age" placeholder="47" v-model="story.age" />
+            <Input
+              label="Ocupatie:"
+              name="occupation"
+              placeholder="sau ce ii placea sa faca?"
+              v-model="story.occupation"
+            />
+          </InputGroup>
+          <InputGroup>
+            <Input
+              label="Județ:"
+              name="city"
+              placeholder="Alege judetul"
+              v-model="story.city"
+            />
+            <Input
+              label="Localitate:"
+              name="county"
+              placeholder="Alege localitatea"
+              v-model="story.county"
+            />
+          </InputGroup>
           <Input
-            label="Prenume:"
-            placeholder="Vasile"
-            name="firstName"
-            v-model="story.authorFirstName"
+            label="Scrie-ne povestea lui"
+            name="content"
+            type="textarea"
+            v-model="story.content"
           />
-          <Input
-            label="Nume:"
-            placeholder="Popescu"
-            name="lastName"
-            v-model="story.authorLastName"
-          />
-        </InputGroup>
-        <InputGroup>
-          <Input
-            label="Email"
-            placeholder="andrei@gmail.com"
-            name="email"
-            v-model="story.authorEmail"
-          />
-        </InputGroup>
-        <InputGroup fullWidth>
-          <Checkbox name="terms" v-model="story.agreeTerms"
-            >This is a content area describing the web purpose and what users
-            will find on it. It is cool to keep it short but
-            explanatory</Checkbox
-          >
-        </InputGroup>
-        <InputGroup fullWidth>
-          <Checkbox name="gdpr" v-model="story.agreeTerms2"
-            >This is a content area describing the web purpose and what users
-            will find on it. It is cool to keep it short but
-            explanatory</Checkbox
-          >
-        </InputGroup>
-        <input type="submit" value=" Trimite povestea" />
-      </form>
-    </div>
+          <Heading :level="3">Datele tale</Heading>
+          <p class="text-2xl font-light mb-10">
+            This is a content area describing the web purpose and what users will
+            find on it. It is cool to keep it short but explanatory
+          </p>
+          <InputGroup>
+            <Input
+              label="Prenume:"
+              placeholder="Vasile"
+              name="firstName"
+              v-model="story.authorFirstName"
+            />
+            <Input
+              label="Nume:"
+              placeholder="Popescu"
+              name="lastName"
+              v-model="story.authorLastName"
+            />
+          </InputGroup>
+          <InputGroup>
+            <Input
+              label="Email"
+              placeholder="andrei@gmail.com"
+              name="email"
+              v-model="story.authorEmail"
+            />
+          </InputGroup>
+          <InputGroup fullWidth>
+            <Checkbox name="terms" v-model="story.agreeTerms"
+              >This is a content area describing the web purpose and what users
+              will find on it. It is cool to keep it short but
+              explanatory</Checkbox
+            >
+          </InputGroup>
+          <InputGroup fullWidth>
+            <Checkbox name="gdpr" v-model="story.agreeTerms2"
+              >This is a content area describing the web purpose and what users
+              will find on it. It is cool to keep it short but
+              explanatory</Checkbox
+            >
+          </InputGroup>
+          <input type="submit" value=" Trimite povestea" />
+        </form>
+      </div>
+      </div>
   </div>
 </template>
 <script>

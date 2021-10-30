@@ -9,13 +9,13 @@
         v-bind:key="component.id"
       >
         <div class="max-w-screen-2xl mx-auto">
-          <div class="grid grid-cols-8 gap-16">
+          <div class="grid grid-cols-8 gap-8 mb-8 md:mb-0">
             <div class="col-span-full lg:col-span-4">
-              <div>
+              <div class="p-4 lg:p-8">
                 <div>
                   <router-link
                     to="/despre"
-                    class="inline-block py-3 px-2 font-semibold text-sm tracking-wide text-white text-opacity-60 hover:text-opacity-100"
+                    class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
                     >Despre proiect</router-link
                   >
                 </div>
@@ -36,8 +36,7 @@
                       v-if="button.href"
                       :to="button.href"
                       class="inline-block mb-2 py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
-                      ><span class="underline">{{ button.text }}</span
-                      ><span class="pl-4">&#8594;</span></router-link
+                      ><span class="underline">{{ button.text }}</span></router-link
                     >
                   </li>
                 </ul>
@@ -45,9 +44,11 @@
               </div>
             </div>
             <div class="col-span-full lg:col-span-4">
-              <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-64 xl:mt-80">
-                {{ component.content }}
-              </p>
+              <div class="p-4 lg:p-8">
+                <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-64 xl:mt-80">
+                  {{ component.content }}
+                </p>
+              </div>
             </div>
           </div>
         </div>

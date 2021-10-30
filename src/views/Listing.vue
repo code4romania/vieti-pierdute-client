@@ -11,12 +11,12 @@
         <div class="max-w-screen-2xl mx-auto">
           <div class="grid grid-cols-8 gap-16">
             <div class="col-span-full lg:col-span-3">
-              <div class="lg:fixed lg:max-w-xs xl:max-w-md lg:h-full lg:pb-5">
-                <div>
+              <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
+                <div class="p-4 lg:p-8">
                   <div>
                     <router-link
                       to="/despre"
-                      class="inline-block py-3 px-2 font-semibold text-sm tracking-wide text-white text-opacity-60 hover:text-opacity-100"
+                      class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
                     >
                       Despre proiect
                     </router-link>
@@ -89,7 +89,7 @@
                     v-if="storiesList.length > 0"
                     :items="storiesList"
                     :min-item-size="64"
-                    class="listing-list h-screen"
+                    class="listing-list h-screen p-4"
                     key-field="index"
                   >
                     <template v-slot="{ item, index, active }">
