@@ -196,10 +196,11 @@ export default {
         this.page && +this.page.components[0].victimsCount.victims;
       const list = this.stories.map(story => ({
         id: story.id,
-        title: `${story.victimLastName} ${story.victimFirstName}`,
+        title: `${story.victimFirstName} ${story.victimLastName}`,
         age: story.age,
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
+        image: `${process.env.VUE_APP_API} + ${story.image.url}`,
         url: `/poveste/${story.id}`
       }));
       const rows =
@@ -376,7 +377,7 @@ export default {
     height: 10rem;
     max-width: calc((100vw - 160px) / 3 * 2);
 
-    background: linear-gradient(to top, rgba(29, 29, 29, 1), transparent);
+    background: linear-gradient(to top, #1d1d1d, transparent);
   }
 
   .listing-list li:nth-child(100):before,

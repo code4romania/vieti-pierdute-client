@@ -6,11 +6,11 @@
     >
       {{ banner.content }}
     </div>
-    <div class="flex w-full flex-col md:flex-row">
+    <div class="flex w-full flex-col md:flex-row" v-if="row">
       <div
-        v-if="row"
         class="md:w-1/2 py-2 text-3xl lg:text2xl leading-relaxed"
         v-for="story in row.stories"
+        v-bind:key="story.id"
       >
         <component
           :is="story.url ? 'router-link' : 'div'"

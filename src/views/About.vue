@@ -15,7 +15,7 @@
                 <div class="flex justify-between items-center">
                   <router-link
                     to="/despre"
-                    class="inline-block py-3 font-semibold text-base tracking-wide text-black"
+                    class="inline-block py-3 font-semibold text-base tracking-wide text-gray-600 underline"
                   >
                     Despre proiect
                   </router-link>
@@ -39,8 +39,8 @@
     <div class="relative flex-1 max-w-screen-2xl lg:mx-auto">
 
       <nav id="nav">
-        <h2 class="inline-block py-3 mr-6 font-semibold tracking-widest text-black text-opacity-60 uppercase underline">Despre proiect</h2>
-        <a href="https://code4.ro/ro/doneaza" target="_blank" class="inline-block py-3 mr-6 font-semibold tracking-widest text-black text-opacity-60 uppercase">Donează</a>
+        <h2 class="inline-block py-3 mr-6 font-semibold tracking-widest text-gray-600 uppercase underline">Despre proiect</h2>
+        <a href="https://code4.ro/ro/doneaza" target="_blank" class="inline-block py-3 mr-6 font-semibold tracking-widest text-gray-600 uppercase">Donează</a>
       </nav>
       <a href="https://code4.ro/ro" class="inline-block my-8 py-2">
         <svg class="fill-current block h-10 w-auto" viewBox="0 0 400 121.9">
