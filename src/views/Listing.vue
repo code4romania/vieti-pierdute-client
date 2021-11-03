@@ -1,139 +1,146 @@
 <template>
-  <div
-    class="listing flex flex-1 bg-primary text-white px-5 py-7 md:py-9 md:px-10 lg:px-20 lg:py-0"
-  >
-    <div class="flex flex-col flex-1 max-w-screen-2xl lg:mx-auto">
+  <div>
+    <div v-if="pageLoading" class="my-16">
+      <Spinner />
+    </div>
+    <div v-if="page">
       <div
-        class="flex-1 lg:flex "
-        v-if="page"
         v-for="component in page.components"
+        v-bind:key="component.id"
       >
-        <div class="lg:w-1/3">
-          <div class="listing-aside lg:fixed flex flex-col h-full lg:py-9">
-            <div class="mb-6 lg:mb-0 flex-1">
-              <div id="nav">
-                <router-link
-                  to="/despre"
-                  class="inline-block py-3 font-semibold tracking-widest text-white text-opacity-60 uppercase"
-                >
-                  Despre Proiect
-                </router-link>
-              </div>
+        <div class="max-w-screen-2xl mx-auto">
+          <div class="grid grid-cols-8 gap-16">
+            <div class="col-span-full lg:col-span-3">
+              <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
+                <div class="p-4 lg:p-8">
+                  <div>
+                    <router-link
+                      to="/despre"
+                      class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
+                    >
+                      Despre proiect
+                    </router-link>
+                  </div>
 
-              <router-link
-                to="/"
-                class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
-                v-if="component.victimsCount"
-              >
-                <span
-                  class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
-                ></span>
-                {{ (+component.victimsCount.victims).toLocaleString() }}
-              </router-link>
-
-              <p
-                class="mb-4 lg:mb-16 text-2xl font-thin text-white text-opacity-80"
-              >
-                {{ component.content }}
-              </p>
-
-              <div class="mb-8 hidden lg:block">
-                <button
-                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                  :class="{ 'opacity-60 border-r-0': list }"
-                  @click="
-                    gallery = true;
-                    list = false;
-                  "
-                >
-                  Galerie
-                </button>
-                <button
-                  class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                  :class="{ 'opacity-60 border-l-0': gallery }"
-                  @click="
-                    list = true;
-                    gallery = false;
-                  "
-                >
-                  Listă
-                </button>
-              </div>
-
-              <ul
-                v-if="component.buttons"
-                class="mt-2 mb-10 lg:mt-8 xl:mt-10 xl:mb-0"
-              >
-                <li v-for="button in component.buttons" v-bind:key="button.id">
                   <router-link
-                    v-if="button.href"
-                    :to="button.href"
-                    class="inline-block mb-2 py-3 text-2xl font-normal lg:text-2xl xl:text-3xl lg:mb-4"
-                    ><span class="underline">{{ button.text }}</span
-                    ><span class="pl-4">&#8594;</span></router-link
+                    to="/"
+                    class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
+                    v-if="component.victimsCount"
                   >
-                </li>
-              </ul>
-            </div>
-            <MadeBy class="hidden lg:block" />
-          </div>
-        </div>
-        <div class="listing-content lg:relative lg:pl-12 lg:w-2/3">
-          <transition name="listing-transition">
-            <DynamicScroller
-              v-show="list"
-              v-if="storiesList.length > 0"
-              :items="storiesList"
-              :min-item-size="64"
-              class="listing-list h-screen"
-              key-field="index"
-            >
-              <template v-slot="{ item, index, active }">
-                <DynamicScrollerItem
-                  :item="item"
-                  :active="active"
-                  :size-dependencies="[item.stories]"
-                  :data-index="index"
-                >
-                  <Item :row="item" :banner="bannersList[index]" />
-                </DynamicScrollerItem>
-              </template>
-            </DynamicScroller>
-            <div
-              v-else
-              class="flex flex-col justify-center align-middle h-full"
-            >
-              <Spinner />
-            </div>
-          </transition>
-          <transition name="listing-transition">
-            <div v-show="gallery">
-              <DynamicScroller
-                v-if="storiesList.length > 0"
-                :items="storiesList"
-                :min-item-size="64"
-                class="listing-list h-screen"
-                key-field="index"
-              >
-                <template v-slot="{ item, index, active }">
-                  <DynamicScrollerItem
-                    :item="item"
-                    :active="active"
-                    :size-dependencies="[item.stories]"
-                    :data-index="index"
+                    <span
+                      class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
+                    ></span>
+                    {{ (+component.victimsCount.victims).toLocaleString() }}
+                  </router-link>
+
+                  <p
+                    class="mb-8 text-2xl font-thin text-white text-opacity-80"
                   >
-                    <Card :row="item" />
-                  </DynamicScrollerItem>
-                </template>
-              </DynamicScroller>
-              <div
-                v-else
-                class="flex flex-col justify-center align-middle h-full"
-              >
-                <Spinner />
+                    {{ component.content }}
+                  </p>
+
+                  <ul
+                    v-if="component.buttons"
+                    class="mb-8"
+                  >
+                    <li v-for="button in component.buttons" v-bind:key="button.id">
+                      <router-link
+                        v-if="button.href"
+                        :to="button.href"
+                        class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
+                        ><span class="underline">{{ button.text }}</span></router-link
+                      >
+                    </li>
+                  </ul>
+
+                  <div class="lg:mb-16">
+                    <button
+                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                      :class="{ 'opacity-60 border-r-0': list }"
+                      @click="
+                        gallery = true;
+                        list = false;
+                      "
+                    >
+                      Galerie
+                    </button>
+                    <button
+                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
+                      :class="{ 'opacity-60 border-l-0': gallery }"
+                      @click="
+                        list = true;
+                        gallery = false;
+                      "
+                    >
+                      Listă
+                    </button>
+                  </div>
+
+                  <MadeBy class="hidden lg:block" />
+                </div>
               </div>
             </div>
-          </transition>
+
+            <div class="col-span-full lg:relative lg:col-span-5">
+              <div class="listing-content lg:relative">
+                <transition name="listing-transition">
+                  <DynamicScroller
+                    v-show="list"
+                    v-if="storiesList.length > 0"
+                    :items="storiesList"
+                    :min-item-size="64"
+                    class="listing-list h-screen p-4"
+                    key-field="index"
+                  >
+                    <template v-slot="{ item, index, active }">
+                      <DynamicScrollerItem
+                        :item="item"
+                        :active="active"
+                        :size-dependencies="[item.stories]"
+                        :data-index="index"
+                      >
+                        <Item :row="item" :banner="bannersList[index]" />
+                      </DynamicScrollerItem>
+                    </template>
+                  </DynamicScroller>
+                  <div
+                    v-else
+                    class="flex flex-col justify-center align-middle h-full"
+                  >
+                    <Spinner />
+                  </div>
+                </transition>
+                <transition name="listing-transition">
+                  <div v-show="gallery">
+                    <DynamicScroller
+                      v-if="storiesList.length > 0"
+                      :items="storiesList"
+                      :min-item-size="64"
+                      class="listing-list h-screen"
+                      key-field="index"
+                    >
+                      <template v-slot="{ item, index, active }">
+                        <DynamicScrollerItem
+                          :item="item"
+                          :active="active"
+                          :size-dependencies="[item.stories]"
+                          :data-index="index"
+                        >
+                          <Card :row="item" />
+                        </DynamicScrollerItem>
+                      </template>
+                    </DynamicScroller>
+                    <div
+                      v-else
+                      class="flex flex-col justify-center align-middle h-full"
+                    >
+                      <Spinner />
+                    </div>
+                  </div>
+                </transition>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -189,11 +196,12 @@ export default {
         this.page && +this.page.components[0].victimsCount.victims;
       const list = this.stories.map(story => ({
         id: story.id,
-        title: `${story.victimLastName} ${story.victimFirstName}`,
+        title: `${story.victimFirstName} ${story.victimLastName}`,
         age: story.age,
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
-        url: `/povesti/${story.id}`
+        image: `${process.env.VUE_APP_API} + ${story.image.url}`,
+        url: `/poveste/${story.id}`
       }));
       const rows =
         this.stories.length > 0 &&
@@ -248,6 +256,9 @@ export default {
         this.banners = banners;
       }
     });
+
+    document.body.classList.remove("bg-white", "text-black");
+    document.body.classList.add("bg-black", "text-white");
   },
   methods: {
     isShort() {
@@ -366,7 +377,7 @@ export default {
     height: 10rem;
     max-width: calc((100vw - 160px) / 3 * 2);
 
-    background: linear-gradient(to top, rgba(29, 29, 29, 1), transparent);
+    background: linear-gradient(to top, #1d1d1d, transparent);
   }
 
   .listing-list li:nth-child(100):before,
