@@ -22,46 +22,55 @@
           This is a content area describing the web purpose and what users will
           find on it. It is cool to keep it short but explanatory
         </p>
-        <form ref="form" @submit="checkForm" class=" max-w-4xl">
+        <form ref="form" @submit="checkForm" class="max-w-4xl mb-24">
           <InputGroup>
             <Input
-              label="Prenume:"
+              label="Prenumele"
               placeholder="Andrei"
               name="victimFirstName"
               v-model="story.victimFirstName"
             />
             <Input
-              label="Nume:"
+              label="Numele"
               placeholder="Popescu"
               name="victimLastName"
               v-model="story.victimLastName"
             />
           </InputGroup>
           <InputGroup>
-            <Input label="Vârsta:" name="age" placeholder="47" v-model="story.age" />
             <Input
-              label="Ocupatie:"
+              label="Vârsta:"
+              type="number"
+              min="1"
+              max="110"
+              step="1"
+              name="age"
+              placeholder="47"
+              v-model="story.age"
+            />
+            <Input
+              label="Ocupația"
               name="occupation"
-              placeholder="sau ce ii placea sa faca?"
+              placeholder="sau ce îi plăcea să facă?"
               v-model="story.occupation"
             />
           </InputGroup>
           <InputGroup>
             <Input
-              label="Județ:"
-              name="city"
+              label="Județul"
+              name="county"
               placeholder="Alege judetul"
-              v-model="story.city"
+              v-model="story.county"
             />
             <Input
-              label="Localitate:"
-              name="county"
+              label="Localitatea"
+              name="city"
               placeholder="Alege localitatea"
-              v-model="story.county"
+              v-model="story.city"
             />
           </InputGroup>
           <Input
-            label="Scrie-ne povestea lui"
+            label="Scrie-ne povestea în câte caractere crezi că este suficient"
             name="content"
             type="textarea"
             v-model="story.content"
@@ -87,7 +96,8 @@
           </InputGroup>
           <InputGroup>
             <Input
-              label="Email"
+              label="E-mail:"
+              type="email"
               placeholder="andrei@gmail.com"
               name="email"
               v-model="story.authorEmail"
@@ -107,18 +117,22 @@
               explanatory</Checkbox
             >
           </InputGroup>
-          <input type="submit" value=" Trimite povestea" />
+          <button type="submit" class="inline-block py-3 text-2xl underline font-normal lg:text-xl xl:text-2xl">
+            Trimite povestea
+          </button>
         </form>
       </div>
-      </div>
+    </div>
   </div>
 </template>
 <script>
-import axios from "axios";
-import Heading from "../components/Heading";
-import Input from "../components/Input";
-import InputGroup from "../components/InputGroup";
-import Checkbox from "../components/Checkbox";
+import axios from 'axios';
+import { useReCaptcha } from 'vue-recaptcha-v3';
+
+import Heading from '../components/Heading';
+import Input from '../components/Input';
+import InputGroup from '../components/InputGroup';
+import Checkbox from '../components/Checkbox';
 
 export default {
   components: { InputGroup, Heading, Input, Checkbox },
@@ -141,21 +155,39 @@ export default {
   methods: {
     checkForm: function(e) {
       e.preventDefault();
-      if (this.story.agreeTerms && this.story.agreeTerms2) {
-        axios
-          .post(
-            process.env.VUE_APP_API + "/stories",
-            this.story
-          )
-          .catch(function(error) {
-            if (error.response) {
-              console.log(error.response.data);
-            } else if (error.request) {
-              console.log(error.request);
-            } else {
-              console.log("Error", error.message);
-            }
-          });
+
+      this.$recaptcha()
+        .then(() => {
+          console.log('test')
+          if (this.story.agreeTerms && this.story.agreeTerms2) {
+            console.log('test 1')
+            axios
+              .post(
+                process.env.VUE_APP_API + "/stories",
+                this.story
+              )
+              .then((response) => {
+                console.log("Story sent", response)
+              })
+              .catch((err) => {
+                console.log("Post to stories error: ", err)
+              });
+          }
+        })
+        .catch((err) => {
+          console.log("reCaptcha error: ", err)
+        });
+    },
+    setup() {
+      const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+
+      const recaptcha = async () => {
+        await recaptchaLoaded();
+        const token = await executeRecaptcha('login');
+      }
+
+      return {
+        recaptcha
       }
     }
   }

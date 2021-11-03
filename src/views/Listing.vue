@@ -369,13 +369,13 @@ export default {
   .listing-content:before {
     content: "";
     position: fixed;
-    right: 5rem;
+    right: 0;
+    left: 0;
     bottom: 0;
     z-index: 20;
 
     width: 100%;
     height: 10rem;
-    max-width: calc((100vw - 160px) / 3 * 2);
 
     background: linear-gradient(to top, #1d1d1d, transparent);
   }

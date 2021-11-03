@@ -25,7 +25,7 @@
                 <h2
                   class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl"
                 >
-                  {{ component.title }}
+                  <div v-html="component.title"></div>
                 </h2>
                 <ul
                   v-if="component.buttons"
