@@ -158,9 +158,7 @@ export default {
 
       this.$recaptcha()
         .then(() => {
-          console.log('test')
           if (this.story.agreeTerms && this.story.agreeTerms2) {
-            console.log('test 1')
             axios
               .post(
                 process.env.VUE_APP_API + "/stories",
