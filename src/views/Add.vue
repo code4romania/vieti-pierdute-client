@@ -22,7 +22,7 @@
           This is a content area describing the web purpose and what users will
           find on it. It is cool to keep it short but explanatory
         </p>
-        <form ref="form" @submit="checkForm" class="max-w-4xl mb-24">
+        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32">
           <InputGroup>
             <Input
               label="Prenumele"
@@ -117,9 +117,22 @@
               explanatory</Checkbox
             >
           </InputGroup>
-          <button type="submit" class="inline-block py-3 text-2xl underline font-normal lg:text-xl xl:text-2xl">
-            Trimite povestea
-          </button>
+          <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <reCaptcha
+              v-if="showRecaptcha"
+              :siteKey="recaptchSiteKey"
+              size="normal" 
+              theme="dark"
+              locale="ro"
+              ref="reCaptcha"
+              @verify="recaptchaVerified"
+              @expire="recaptchaExpired"
+              @fail="recaptchaFailed"
+            ></reCaptcha>
+            <button type="submit" class="inline-block py-3 text-2xl underline font-normal lg:text-2xl xl:text-3xl">
+              Trimite povestea
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -127,15 +140,21 @@
 </template>
 <script>
 import axios from 'axios';
-import { useReCaptcha } from 'vue-recaptcha-v3';
+import reCaptcha from '@/api/reCaptcha';
 
-import Heading from '../components/Heading';
-import Input from '../components/Input';
-import InputGroup from '../components/InputGroup';
-import Checkbox from '../components/Checkbox';
+import Heading from '@/components/Heading';
+import Input from '@/components/Input';
+import InputGroup from '@/components/InputGroup';
+import Checkbox from '@/components/Checkbox';
 
 export default {
-  components: { InputGroup, Heading, Input, Checkbox },
+  components: {
+    InputGroup,
+    Heading,
+    Input,
+    Checkbox,
+    reCaptcha
+  },
   data: () => ({
     story: {
       victimFirstName: null,
@@ -150,43 +169,50 @@ export default {
       authorEmail: null,
       agreeTerms: false,
       agreeTerms2: false
-    }
+    },
+    showRecaptcha: true,
+    reCaptchaVerified: false
   }),
+  computed: {
+    recaptchSiteKey() {
+      return process.env.VUE_APP_SITE_KEY_RECAPTCHA
+    }
+  },
   methods: {
     checkForm: function(e) {
       e.preventDefault();
 
-      this.$recaptcha()
-        .then(() => {
-          if (this.story.agreeTerms && this.story.agreeTerms2) {
-            axios
-              .post(
-                process.env.VUE_APP_API + "/stories",
-                this.story
-              )
-              .then((response) => {
-                console.log("Story sent", response)
-              })
-              .catch((err) => {
-                console.log("Post to stories error: ", err)
-              });
-          }
-        })
-        .catch((err) => {
-          console.log("reCaptcha error: ", err)
-        });
+      // this.recaptchaVerified()
+
+      // this.$refs.reCaptcha.then((response) => {
+      //   console.log(response)
+      // })
+      if (this.reCaptchaVerified) {
+        if (this.story.agreeTerms && this.story.agreeTerms2) {
+          axios
+            .post(
+              process.env.VUE_APP_API + "/stories",
+              this.story
+            )
+            .then((response) => {
+              console.log("Story sent", response);
+            })
+            .catch((err) => {
+              console.log("Post to stories error: ", err);
+            });
+        }
+      }
     },
-    setup() {
-      const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
-
-      const recaptcha = async () => {
-        await recaptchaLoaded();
-        const token = await executeRecaptcha('login');
+    recaptchaVerified(response) {
+      if (response) {
+        this.reCaptchaVerified = true;
       }
-
-      return {
-        recaptcha
-      }
+    },
+    recaptchaExpired() {
+      this.$refs.reCaptcha.reset();
+    },
+    recaptchaFailed(err) {
+      console.log('captch failed', err)
     }
   }
 };
