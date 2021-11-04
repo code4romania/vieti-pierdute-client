@@ -7,12 +7,18 @@
       :placeholder="this.placeholder"
       v-model="this.value"
     />
+    <InputError v-for="message in error">{{ message }}</InputError>
   </div>
 </template>
 
 <script>
+import InputError from './InputError';
+
 export default {
   name: "Input",
+  components: {
+    InputError
+  },
   props: {
     name: {
       type: String,
@@ -28,16 +34,32 @@ export default {
     placeholder: {
       type: String,
       required: false
+    },
+    type: {
+      type: String,
+      default: "text"
+    },
+    min: {
+      type: String
+    },
+    max: {
+      type: String
+    },
+    step: {
+      type: String
+    },
+    error: {
+      type: Array
     }
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   computed: {
     value: {
       get() {
-        return this.modelValue
+        return this.modelValue;
       },
       set(value) {
-        this.$emit('update:modelValue', value)
+        this.$emit("update:modelValue", value);
       }
     }
   }

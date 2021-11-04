@@ -5,17 +5,25 @@
       <label :for="name"> <slot></slot> </label>
     </div>
   </div>
+  <InputError v-for="message in error">{{ message }}</InputError>
 </template>
 
 <script>
+import InputError from './InputError';
 export default {
   name: "Checkbox",
+  components: {
+    InputError
+  },
   props: {
     name: {
       type: String
     },
     modelValue: {
       type: Boolean
+    },
+    error: {
+      type: Array
     }
   },
   emits: ["update:modelValue"],
