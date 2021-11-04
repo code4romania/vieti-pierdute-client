@@ -182,11 +182,6 @@ export default {
     checkForm: function(e) {
       e.preventDefault();
 
-      // this.recaptchaVerified()
-
-      // this.$refs.reCaptcha.then((response) => {
-      //   console.log(response)
-      // })
       if (this.reCaptchaVerified) {
         if (this.story.agreeTerms && this.story.agreeTerms2) {
           axios
