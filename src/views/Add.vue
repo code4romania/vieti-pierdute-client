@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import api from '../api';
 import { validate } from "../lib/validate";
 import { storySchema } from "../lib/schema";
 import Heading from "../components/Heading";
@@ -177,8 +177,7 @@ export default {
       this.errors = errors;
 
       if (isValid) {
-        axios
-          .post(process.env.VUE_APP_API + "/stories", this.story)
+        api.postStory(this.story)
           .catch(error => {
             if (error.response) {
               this.errors = error.response.data.data.errors;
