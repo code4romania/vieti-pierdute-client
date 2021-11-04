@@ -181,12 +181,7 @@ export default {
           .post(process.env.VUE_APP_API + "/stories", this.story)
           .catch(error => {
             if (error.response) {
-              console.log("-->", error.response.data.data.errors);
               this.errors = error.response.data.data.errors;
-            } else if (error.request) {
-              console.log(error.request);
-            } else {
-              console.log("Error", error.message);
             }
           });
       }
