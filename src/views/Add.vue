@@ -6,7 +6,8 @@
           <router-link
             to="/despre"
             class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-          >Despre proiect</router-link>
+            >Despre proiect</router-link
+          >
         </div>
         <Heading :level="1">
           <a @click="$router.go(-1)" class="cursor-pointer">
@@ -28,12 +29,14 @@
               label="Prenumele"
               placeholder="Andrei"
               name="victimFirstName"
+              :error="this.errors.victimFirstName"
               v-model="story.victimFirstName"
             />
             <Input
               label="Numele"
               placeholder="Popescu"
               name="victimLastName"
+              :error="this.errors.victimLastName"
               v-model="story.victimLastName"
             />
           </InputGroup>
@@ -46,12 +49,14 @@
               step="1"
               name="age"
               placeholder="47"
+              :error="this.errors.age"
               v-model="story.age"
             />
             <Input
               label="Ocupația"
               name="occupation"
               placeholder="sau ce îi plăcea să facă?"
+              :error="this.errors.occupation"
               v-model="story.occupation"
             />
           </InputGroup>
@@ -61,12 +66,14 @@
               name="county"
               placeholder="Alege judetul"
               v-model="story.county"
+              :error="errors.county"
             />
             <Input
               label="Localitatea"
               name="city"
               placeholder="Alege localitatea"
               v-model="story.city"
+              :error="errors.city"
             />
           </InputGroup>
           <Input
@@ -74,11 +81,12 @@
             name="content"
             type="textarea"
             v-model="story.content"
+            :error="errors.content"
           />
           <Heading :level="3">Datele tale</Heading>
           <p class="text-2xl font-light mb-10">
-            This is a content area describing the web purpose and what users will
-            find on it. It is cool to keep it short but explanatory
+            This is a content area describing the web purpose and what users
+            will find on it. It is cool to keep it short but explanatory
           </p>
           <InputGroup>
             <Input
@@ -86,12 +94,14 @@
               placeholder="Vasile"
               name="firstName"
               v-model="story.authorFirstName"
+              :error="errors.authorFirstName"
             />
             <Input
               label="Nume:"
               placeholder="Popescu"
               name="lastName"
               v-model="story.authorLastName"
+              :error="errors.authorLastName"
             />
           </InputGroup>
           <InputGroup>
@@ -101,17 +111,24 @@
               placeholder="andrei@gmail.com"
               name="email"
               v-model="story.authorEmail"
+              :error="errors.authorEmail"
             />
           </InputGroup>
           <InputGroup fullWidth>
-            <Checkbox name="terms" v-model="story.agreeTerms"
+            <Checkbox
+              name="terms"
+              v-model="story.agreeTerms"
+              :error="errors.agreeTerms"
               >This is a content area describing the web purpose and what users
               will find on it. It is cool to keep it short but
               explanatory</Checkbox
             >
           </InputGroup>
           <InputGroup fullWidth>
-            <Checkbox name="gdpr" v-model="story.agreeTerms2"
+            <Checkbox
+              name="gdpr"
+              v-model="story.agreeTerms2"
+              :error="errors.agreeTerms2"
               >This is a content area describing the web purpose and what users
               will find on it. It is cool to keep it short but
               explanatory</Checkbox
@@ -125,7 +142,7 @@
               theme="dark"
               locale="ro"
               ref="reCaptcha"
-              @verify="recaptchaVerified"
+              @verify="reCaptchaVerified"
               @expire="recaptchaExpired"
               @fail="recaptchaFailed"
             ></reCaptcha>
@@ -139,13 +156,16 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import api from '@/api';
 import reCaptcha from '@/api/reCaptcha';
 
-import Heading from '@/components/Heading';
-import Input from '@/components/Input';
-import InputGroup from '@/components/InputGroup';
-import Checkbox from '@/components/Checkbox';
+import { validate } from "@/lib/validate";
+import { storySchema } from "@/lib/schema";
+
+import Heading from "@/components/Heading";
+import Input from "@/components/Input";
+import InputGroup from "@/components/InputGroup";
+import Checkbox from "@/components/Checkbox";
 
 export default {
   components: {
@@ -156,6 +176,7 @@ export default {
     reCaptcha
   },
   data: () => ({
+    errors: {},
     story: {
       victimFirstName: null,
       victimLastName: null,
@@ -171,7 +192,7 @@ export default {
       agreeTerms2: false
     },
     showRecaptcha: true,
-    reCaptchaVerified: false
+    // reCaptchaVerified: false
   }),
   computed: {
     recaptchSiteKey() {
@@ -181,27 +202,22 @@ export default {
   methods: {
     checkForm: function(e) {
       e.preventDefault();
+      const { errors, isValid } = validate(this.story, storySchema);
+      this.errors = errors;
 
-      if (this.reCaptchaVerified) {
-        if (this.story.agreeTerms && this.story.agreeTerms2) {
-          axios
-            .post(
-              process.env.VUE_APP_API + "/stories",
-              this.story
-            )
-            .then((response) => {
-              console.log("Story sent", response);
-            })
-            .catch((err) => {
-              console.log("Post to stories error: ", err);
-            });
-        }
+      console.log(this.$refs.reCaptcha.verify())
+
+      if (isValid) {
+        api.postStory(this.story)
+          .catch(error => {
+            if (error.response) {
+              this.errors = error.response.data.data.errors;
+            }
+          });
       }
     },
-    recaptchaVerified(response) {
-      if (response) {
-        this.reCaptchaVerified = true;
-      }
+    reCaptchaVerified(response) {
+      console.log(response);
     },
     recaptchaExpired() {
       this.$refs.reCaptcha.reset();

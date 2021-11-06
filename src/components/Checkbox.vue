@@ -15,17 +15,28 @@
       </label>
     </div>
   </div>
+  <InputError
+    v-for="(message, index) in error"
+    v-bind:key="'error-' + index"
+  >{{ message }}</InputError>
 </template>
 
 <script>
+import InputError from './InputError';
 export default {
   name: "Checkbox",
+  components: {
+    InputError
+  },
   props: {
     name: {
       type: String
     },
     modelValue: {
       type: Boolean
+    },
+    error: {
+      type: Array
     }
   },
   emits: ["update:modelValue"],
