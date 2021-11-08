@@ -142,6 +142,7 @@
               theme="dark"
               locale="ro"
               ref="reCaptcha"
+              v-model="story.reCaptcha"
               @verify="reCaptchaVerified"
               @expire="recaptchaExpired"
               @fail="recaptchaFailed"
@@ -189,10 +190,10 @@ export default {
       authorLastName: null,
       authorEmail: null,
       agreeTerms: false,
-      agreeTerms2: false
+      agreeTerms2: false,
+      reCaptcha: null
     },
-    showRecaptcha: true,
-    // reCaptchaVerified: false
+    showRecaptcha: true
   }),
   computed: {
     recaptchSiteKey() {
@@ -205,10 +206,19 @@ export default {
       const { errors, isValid } = validate(this.story, storySchema);
       this.errors = errors;
 
-      console.log(this.$refs.reCaptcha.verify())
+      // TODO: scrolling behaviour or smth to let the user know he error above his screen view
+
+      // console.log(this.errors)
+      console.log(this.story)
+
+      // debugger
 
       if (isValid) {
         api.postStory(this.story)
+          .then(response => {
+            // TODO: update screen with thank you, e-mail notification & maybe smth to click further on?
+            console.log(response)
+          })
           .catch(error => {
             if (error.response) {
               this.errors = error.response.data.data.errors;
@@ -218,6 +228,7 @@ export default {
     },
     reCaptchaVerified(response) {
       console.log(response);
+      this.story.reCaptcha = response;
     },
     recaptchaExpired() {
       this.$refs.reCaptcha.reset();

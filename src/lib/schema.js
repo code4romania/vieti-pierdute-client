@@ -1,5 +1,5 @@
 const isEmpty = value => !value;
-const isNotNumber = value => !Number.isInteger(value);
+const isNotNumber = value => !Number.isInteger(parseInt(value, 10));
 
 export const storySchema = [
   {
@@ -45,22 +45,22 @@ export const storySchema = [
   {
     key: "authorFirstName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți prenumele dumneavoastra"
+    error: "Vă rugăm introduceți prenumele dumneavoastră"
   },
   {
     key: "authorLastName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți numele dumneavoastra"
+    error: "Vă rugăm introduceți numele dumneavoastră"
   },
   {
     key: "authorEmail",
     condition: isEmpty,
-    error: "Vă rugăm introduceți e-mail-ul dumneavoastra"
+    error: "Vă rugăm introduceți e-mail-ul dumneavoastră"
   },
   {
     key: "agreeTerms",
     condition: isEmpty,
-    error: "Va rugam bifati asta"
+    error: "Va rugăm bifati asta"
   },
   {
     key: "agreeTerms2",
