@@ -200,7 +200,8 @@ export default {
         age: story.age,
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
-        image: `${process.env.VUE_APP_API} + ${story.image.url}`,
+        image: `https://picsum.photos/id/1005/900/450`,
+      // image: `${story.image.url}`,
         url: `/poveste/${story.id}`
       }));
       const rows =
