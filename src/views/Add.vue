@@ -191,7 +191,7 @@ export default {
       authorEmail: null,
       agreeTerms: false,
       agreeTerms2: false,
-      reCaptcha: null
+      recaptcha: null
     },
     showRecaptcha: true
   }),
@@ -228,7 +228,7 @@ export default {
     },
     reCaptchaVerified(response) {
       console.log(response);
-      this.story.reCaptcha = response;
+      this.story.recaptcha = response;
     },
     recaptchaExpired() {
       this.$refs.reCaptcha.reset();
