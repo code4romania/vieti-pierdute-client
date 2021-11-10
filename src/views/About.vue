@@ -15,7 +15,7 @@
                 <div class="flex justify-between items-center">
                   <router-link
                     to="/despre"
-                    class="inline-block py-3 font-semibold text-base tracking-wide text-gray-600 underline"
+                    class="inline-block py-3 font-semibold text-base tracking-wide text-gray-600"
                   >
                     Despre proiect
                   </router-link>
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>

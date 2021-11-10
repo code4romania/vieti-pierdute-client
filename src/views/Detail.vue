@@ -9,17 +9,30 @@
             <div class="col-span-full">
               <div class="p-4 lg:p-8">
                 <div class="flex justify-between items-center mb-8">
-                  <router-link
-                    to="/povesti"
-                    class="inline-block py-3 font-semibold text-base tracking-wide text-gray-400 hover:underline"
-                  >
-                    Despre proiect
-                  </router-link>
-                  <a @click="$router.go(-1)" class="cursor-pointer relative w-12 h-12">
-                    <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-full h-0.5 bg-black rotate-45"></span>
-                    <span class="block w-0 h-0 overflow-hidden">Închide</span>
-                    <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-0.5 h-full bg-black rotate-45"></span>
-                  </a>
+                  <div class="flex gap-8">
+                    <router-link
+                      to="/despre"
+                      class="inline-block py-3 font-semibold text-base tracking-wide text-gray-400 hover:underline"
+                    >
+                      Despre proiect
+                    </router-link>
+                    <a
+                      href="#"
+                      class="inline-block py-3 font-semibold text-base tracking-wide text-gray-400 hover:underline"
+                    >
+                      Alt nume
+                    </a>
+                  </div>
+                  <div>
+                    <router-link
+                      to="/povesti"
+                      class="cursor-pointer relative block w-12 h-12"
+                    >
+                      <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-full h-0.5 bg-black rotate-45"></span>
+                      <span class="sr-only">Închide</span>
+                      <span class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-0.5 h-full bg-black rotate-45"></span>
+                    </router-link>
+                  </div>
                 </div>
 
                 <div class="max-w-4xl mb-32">
