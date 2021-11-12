@@ -1,66 +1,66 @@
 const isEmpty = value => !value;
-const isNotNumber = value => !Number.isInteger(value);
+const isNotNumber = value => !Number.isInteger(parseInt(value, 10));
 
 export const storySchema = [
   {
     key: "victimFirstName",
     condition: isEmpty,
-    error: "Va rugam introduceti prenumele victimei Covid-19"
+    error: "Vă rugăm introduceți prenumele"
   },
   {
     key: "victimLastName",
     condition: isEmpty,
-    error: "Va rugam introduceti numele victimei Covid-19"
+    error: "Vă rugăm introduceți numele"
   },
   {
     key: "age",
     condition: isEmpty,
-    error: "Va rugam introduceti varsta victimei Covid-19"
+    error: "Vă rugăm introduceți vârsta"
   },
   {
     key: "age",
     condition: isNotNumber,
-    error: "Va rugam introduceti doar cifre"
+    error: "Vă rugăm introduceți doar cifre"
   },
   {
     key: "occupation",
     condition: isEmpty,
-    error: "Va rugam introduceti ocupația victimei Covid-19"
+    error: "Vă rugăm introduceți ocupația"
   },
   {
     key: "county",
     condition: isEmpty,
-    error: "Va rugam introduceti județul victimei Covid-19"
+    error: "Vă rugăm alegeți județul"
   },
   {
     key: "city",
     condition: isEmpty,
-    error: "Va rugam introduceti localitatea victimei Covid-19"
+    error: "Vă rugăm alegeți localitatea"
   },
   {
     key: "content",
     condition: isEmpty,
-    error: "Va rugam introduceti povestea victimei Covid-19"
+    error: "Vă rugăm introduceți povestea"
   },
   {
     key: "authorFirstName",
     condition: isEmpty,
-    error: "Va rugam introduceti prenumele dumneavoastra"
+    error: "Vă rugăm introduceți prenumele dumneavoastră"
   },
   {
     key: "authorLastName",
     condition: isEmpty,
-    error: "Va rugam introduceti numele dumneavoastra"
+    error: "Vă rugăm introduceți numele dumneavoastră"
   },
   {
     key: "authorEmail",
     condition: isEmpty,
-    error: "Va rugam introduceti e-mail-ul dumneavoastra"
+    error: "Vă rugăm introduceți e-mail-ul dumneavoastră"
   },
   {
     key: "agreeTerms",
     condition: isEmpty,
-    error: "Va rugam bifati asta"
+    error: "Va rugăm bifati asta"
   },
   {
     key: "agreeTerms2",

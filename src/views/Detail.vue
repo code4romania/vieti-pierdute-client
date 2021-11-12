@@ -44,7 +44,8 @@
                   <div class="mb-8 filter grayscale max-w-2xl">
                     <!-- NEED HELP HERE: For some reason process.env.VUE_APP_API won't render here, tried a computed value also, process.env is an empty object in that case -->
                     <!-- {{process.env.VUE_APP_API}} -->
-                    <img :src="'http://localhost:1337' + story.image.url">
+                    <!-- <img :src="'http://localhost:1337' + story.image.url"> -->
+                    <img src="https://picsum.photos/id/1005/900/450">
                   </div>
 
                   <!-- TODO: we should render the markdown here -->
