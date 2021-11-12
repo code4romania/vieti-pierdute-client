@@ -200,7 +200,8 @@ export default {
         age: story.age,
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
-        image: `${process.env.VUE_APP_API} + ${story.image.url}`,
+        image: `https://picsum.photos/id/1005/900/450`,
+      // image: `${story.image.url}`,
         url: `/poveste/${story.id}`
       }));
       const rows =
@@ -369,13 +370,13 @@ export default {
   .listing-content:before {
     content: "";
     position: fixed;
-    right: 5rem;
+    right: 0;
+    left: 0;
     bottom: 0;
     z-index: 20;
 
     width: 100%;
     height: 10rem;
-    max-width: calc((100vw - 160px) / 3 * 2);
 
     background: linear-gradient(to top, #1d1d1d, transparent);
   }

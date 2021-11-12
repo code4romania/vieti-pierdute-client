@@ -22,10 +22,8 @@
                 <h1 class="mt-12 mb-2 text-8xl font-light lg:text-9xl xl:text-10xl">
                   {{ (+component.victimsCount.victims).toLocaleString() }}
                 </h1>
-                <h2
-                  class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl"
-                >
-                  {{ component.title }}
+                <h2 class="text-5xl py-5 font-light leading-tight lg:text-7xl xl:text-8xl">
+                  {{component.title}}
                 </h2>
                 <ul
                   v-if="component.buttons"

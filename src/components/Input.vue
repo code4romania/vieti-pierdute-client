@@ -1,13 +1,21 @@
 <template>
   <div>
     <label>{{ this.label }}</label>
+    <!-- TODO: handle type textarea with h-32 additional class -->
     <input
-      class="appearance-none block w-full bg-transparent border-b mt-4"
+      :type="this.type"
+      class="appearance-none block text-lg w-full bg-transparent border-b mt-4 pb-2 border-gray-500 focus:outline-none focus:border-white placeholder-gray-600"
       :name="this.name"
+      :min="this.min"
+      :max="this.max"
+      :step="this.step"
       :placeholder="this.placeholder"
       v-model="this.value"
     />
-    <InputError v-for="message in error">{{ message }}</InputError>
+    <InputError
+      v-for="(message, index) in error"
+      v-bind:key="'error-' + index"
+    >{{ message }}</InputError>
   </div>
 </template>
 
