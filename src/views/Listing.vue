@@ -77,6 +77,19 @@
                           :size-dependencies="[item.stories]"
                           :data-index="index"
                         >
+                          <div v-show="index === 0" class="md:hidden">
+                            <Jumbotron
+                              :title="
+                                (+component.victimsCount
+                                  .victims).toLocaleString()
+                              "
+                              :content="component.content"
+                              :buttons="component.buttons"
+                              :list="list"
+                              :gallery="gallery"
+                              :onSwitchView="handleSwitchView"
+                            />
+                          </div>
                           <Card :row="item" />
                         </DynamicScrollerItem>
                       </template>
@@ -200,7 +213,6 @@ export default {
     this.bannersError = null;
     this.bannersLoading = true;
     api.getBanners((err, banners) => {
-      console.log("banners", banners);
       this.bannersLoading = false;
       if (err) {
         this.bannersError = err.toString();
