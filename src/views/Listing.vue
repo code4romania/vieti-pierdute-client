@@ -4,10 +4,7 @@
       <Spinner />
     </div>
     <div v-if="page">
-      <div
-        v-for="component in page.components"
-        v-bind:key="component.id"
-      >
+      <div v-for="component in page.components" v-bind:key="component.id">
         <div class="max-w-screen-2xl mx-auto">
           <div class="grid grid-cols-8 gap-16">
             <div class="col-span-full lg:col-span-3">
@@ -33,22 +30,22 @@
                     {{ (+component.victimsCount.victims).toLocaleString() }}
                   </router-link>
 
-                  <p
-                    class="mb-8 text-2xl font-thin text-white text-opacity-80"
-                  >
+                  <p class="mb-8 text-2xl font-thin text-white text-opacity-80">
                     {{ component.content }}
                   </p>
 
-                  <ul
-                    v-if="component.buttons"
-                    class="mb-8"
-                  >
-                    <li v-for="button in component.buttons" v-bind:key="button.id">
+                  <ul v-if="component.buttons" class="mb-8">
+                    <li
+                      v-for="button in component.buttons"
+                      v-bind:key="button.id"
+                    >
                       <router-link
                         v-if="button.href"
                         :to="button.href"
                         class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
-                        ><span class="underline">{{ button.text }}</span></router-link
+                        ><span class="underline">{{
+                          button.text
+                        }}</span></router-link
                       >
                     </li>
                   </ul>
@@ -115,7 +112,7 @@
                     <DynamicScroller
                       v-if="storiesList.length > 0"
                       :items="storiesList"
-                      :min-item-size="64"
+                      :min-item-size="200"
                       class="listing-list h-screen"
                       key-field="index"
                     >
@@ -201,7 +198,7 @@ export default {
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
         image: `https://picsum.photos/id/1005/900/450`,
-      // image: `${story.image.url}`,
+        // image: `${story.image.url}`,
         url: `/poveste/${story.id}`
       }));
       const rows =
@@ -266,7 +263,7 @@ export default {
       return Math.floor(Math.random() * 10) > 5;
     },
     placeholdersList(length) {
-      return Array.from({ length }, (_, i) => ({
+      return Array.from({ length: this.gallery ? 0 : length }, (_, i) => ({
         id: `placeholder-${i}`,
         title: this.isShort() ? "***** *****" : "*** ***** ****"
       }));
