@@ -7,74 +7,16 @@
       <div v-for="component in page.components" v-bind:key="component.id">
         <div class="max-w-screen-2xl mx-auto">
           <div class="grid grid-cols-8 gap-16">
-            <div class="col-span-full lg:col-span-3">
+            <div class="col-span-full lg:col-span-3 hidden md:block">
               <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
-                <div class="p-4 lg:p-8">
-                  <div>
-                    <router-link
-                      to="/despre"
-                      class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-                    >
-                      Despre proiect
-                    </router-link>
-                  </div>
-
-                  <router-link
-                    to="/"
-                    class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
-                    v-if="component.victimsCount"
-                  >
-                    <span
-                      class="absolute left-2 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
-                    ></span>
-                    {{ (+component.victimsCount.victims).toLocaleString() }}
-                  </router-link>
-
-                  <p class="mb-8 text-2xl font-thin text-white text-opacity-80">
-                    {{ component.content }}
-                  </p>
-
-                  <ul v-if="component.buttons" class="mb-8">
-                    <li
-                      v-for="button in component.buttons"
-                      v-bind:key="button.id"
-                    >
-                      <router-link
-                        v-if="button.href"
-                        :to="button.href"
-                        class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
-                        ><span class="underline">{{
-                          button.text
-                        }}</span></router-link
-                      >
-                    </li>
-                  </ul>
-
-                  <div class="lg:mb-16">
-                    <button
-                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                      :class="{ 'opacity-60 border-r-0': list }"
-                      @click="
-                        gallery = true;
-                        list = false;
-                      "
-                    >
-                      Galerie
-                    </button>
-                    <button
-                      class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
-                      :class="{ 'opacity-60 border-l-0': gallery }"
-                      @click="
-                        list = true;
-                        gallery = false;
-                      "
-                    >
-                      Listă
-                    </button>
-                  </div>
-
-                  <MadeBy class="hidden lg:block" />
-                </div>
+                <Jumbotron
+                  :title="(+component.victimsCount.victims).toLocaleString()"
+                  :content="component.content"
+                  :buttons="component.buttons"
+                  :list="list"
+                  :gallery="gallery"
+                  :onSwitchView="handleSwitchView"
+                />
               </div>
             </div>
 
@@ -96,6 +38,18 @@
                         :size-dependencies="[item.stories]"
                         :data-index="index"
                       >
+                        <div v-show="index === 0" class="md:hidden">
+                          <Jumbotron
+                            :title="
+                              (+component.victimsCount.victims).toLocaleString()
+                            "
+                            :content="component.content"
+                            :buttons="component.buttons"
+                            :list="list"
+                            :gallery="gallery"
+                            :onSwitchView="handleSwitchView"
+                          />
+                        </div>
                         <Item :row="item" :banner="bannersList[index]" />
                       </DynamicScrollerItem>
                     </template>
@@ -148,15 +102,15 @@
 import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 import api from "@/api";
 import shuffle from "@/lib/shuffle";
-import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
 import Item from "@/components/Item.vue";
 import Card from "@/components/Card.vue";
+import Jumbotron from "../components/Jumbotron";
 
 export default {
   name: "Listing",
   components: {
-    MadeBy,
+    Jumbotron,
     Spinner,
     Item,
     Card
@@ -267,6 +221,10 @@ export default {
         id: `placeholder-${i}`,
         title: this.isShort() ? "***** *****" : "*** ***** ****"
       }));
+    },
+    handleSwitchView({ list, gallery }) {
+      this.list = list;
+      this.gallery = gallery;
     }
   }
 };
