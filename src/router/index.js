@@ -12,13 +12,13 @@ const routes = [{
     },
     {
         path: '/povesti',
-        name: 'Listing',
+        name: 'Stories',
         component: Listing
     },
     {
         path: '/poveste/:storyId?',
-        name: 'Detail',
-        component: Detail
+        name: 'Story',
+        component: Listing
     },
     {
         path: '/adauga-o-poveste',
