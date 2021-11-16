@@ -1,12 +1,13 @@
 <template>
   <div>
+    <Detail v-show="storyId" />
     <div v-if="pageLoading" class="my-16">
       <Spinner />
     </div>
     <div v-if="page">
       <div v-for="component in page.components" v-bind:key="component.id">
         <div class="max-w-screen-2xl mx-auto">
-          <div class="grid grid-cols-8 gap-16">
+          <div class="grid grid-cols-8">
             <div class="col-span-full lg:col-span-3 hidden md:block">
               <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
                 <Jumbotron
@@ -119,10 +120,12 @@ import Spinner from "@/components/Spinner.vue";
 import Item from "@/components/Item.vue";
 import Card from "@/components/Card.vue";
 import Jumbotron from "../components/Jumbotron";
+import Detail from "../views/Detail";
 
 export default {
   name: "Listing",
   components: {
+    Detail,
     Jumbotron,
     Spinner,
     Item,
@@ -144,6 +147,9 @@ export default {
     };
   },
   computed: {
+    storyId: function() {
+      return this.$route.params.storyId;
+    },
     bannersList: function() {
       return this.banners.reduce(
         (o, key) => ({
