@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     fetchData() {
+      this.story = null;
       this.storyError = null;
       this.storyLoading = true;
       if (this.$route.params.storyId) {
