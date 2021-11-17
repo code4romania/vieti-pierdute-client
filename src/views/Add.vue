@@ -2,13 +2,7 @@
   <div>
     <div class="max-w-screen-2xl mx-auto">
       <div class="p-4 lg:p-8">
-        <div>
-          <router-link
-            to="/despre"
-            class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-            >Despre proiect</router-link
-          >
-        </div>
+        <Nav />
         <Heading :level="1">
           <a @click="$router.go(-1)" class="cursor-pointer">
             <span
@@ -134,11 +128,13 @@
               explanatory</Checkbox
             >
           </InputGroup>
-          <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div
+            class="flex flex-col md:flex-row md:justify-between md:items-center gap-4"
+          >
             <reCaptcha
               v-if="showRecaptcha"
               :siteKey="recaptchSiteKey"
-              size="normal" 
+              size="normal"
               theme="dark"
               locale="ro"
               ref="reCaptcha"
@@ -147,7 +143,10 @@
               @expire="recaptchaExpired"
               @fail="recaptchaFailed"
             ></reCaptcha>
-            <button type="submit" class="inline-block py-3 text-2xl underline font-normal lg:text-2xl xl:text-3xl">
+            <button
+              type="submit"
+              class="inline-block py-3 text-2xl underline font-normal lg:text-2xl xl:text-3xl"
+            >
               Trimite povestea
             </button>
           </div>
@@ -157,12 +156,13 @@
   </div>
 </template>
 <script>
-import api from '@/api';
-import reCaptcha from '@/api/reCaptcha';
+import api from "@/api";
+import reCaptcha from "@/api/reCaptcha";
 
 import { validate } from "@/lib/validate";
 import { storySchema } from "@/lib/schema";
 
+import Nav from '@/components/Nav';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import InputGroup from "@/components/InputGroup";
@@ -170,6 +170,7 @@ import Checkbox from "@/components/Checkbox";
 
 export default {
   components: {
+    Nav,
     InputGroup,
     Heading,
     Input,
@@ -197,7 +198,7 @@ export default {
   }),
   computed: {
     recaptchSiteKey() {
-      return process.env.VUE_APP_SITE_KEY_RECAPTCHA
+      return process.env.VUE_APP_SITE_KEY_RECAPTCHA;
     }
   },
   methods: {
@@ -209,15 +210,16 @@ export default {
       // TODO: scrolling behaviour or smth to let the user know he error above his screen view
 
       // console.log(this.errors)
-      console.log(this.story)
+      console.log(this.story);
 
       // debugger
 
       if (isValid) {
-        api.postStory(this.story)
+        api
+          .postStory(this.story)
           .then(response => {
             // TODO: update screen with thank you, e-mail notification & maybe smth to click further on?
-            console.log(response)
+            console.log(response);
           })
           .catch(error => {
             if (error.response) {
@@ -234,7 +236,7 @@ export default {
       this.$refs.reCaptcha.reset();
     },
     recaptchaFailed(err) {
-      console.log('captch failed', err)
+      console.log("captch failed", err);
     }
   }
 };

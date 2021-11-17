@@ -12,13 +12,7 @@
           <div class="grid grid-cols-8 gap-8 mb-8 md:mb-0">
             <div class="col-span-full lg:col-span-4">
               <div class="p-4 lg:p-8">
-                <div>
-                  <router-link
-                    to="/despre"
-                    class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-                    >Despre proiect</router-link
-                  >
-                </div>
+               <Nav />
                 <h1 class="mt-12 mb-2 text-8xl font-light lg:text-9xl xl:text-10xl">
                   {{ (+component.victimsCount.victims).toLocaleString() }}
                 </h1>
@@ -57,13 +51,15 @@
 
 <script>
 import api from "@/api";
-import MadeBy from "@/components/MadeBy.vue";
-import Spinner from "@/components/Spinner.vue";
+import MadeBy from "@/components/MadeBy";
+import Nav from "@/components/Nav";
+import Spinner from "@/components/Spinner";
 
 export default {
   name: "Home",
   components: {
     MadeBy,
+    Nav,
     Spinner
   },
   data: () => ({
