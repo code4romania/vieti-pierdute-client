@@ -13,12 +13,7 @@
         <div class="col-span-full">
           <div class="p-4 lg:p-8">
             <div class="flex justify-between items-center mb-8">
-              <router-link
-                to="/povesti"
-                class="inline-block py-3 font-semibold text-base tracking-wide text-gray-400 hover:underline"
-              >
-                Despre proiect
-              </router-link>
+             <Nav />
               <a
                 @click="$router.go(-1)"
                 class="cursor-pointer relative w-12 h-12"
@@ -80,14 +75,16 @@
 <script>
 import api from "@/api";
 
-import Heading from "../components/Heading";
-import MadeBy from "../components/MadeBy";
-import Spinner from "../components/Spinner";
+import Heading from "@/components/Heading";
+import MadeBy from "@/components/MadeBy";
+import Nav from "@/components/Nav";
+import Spinner from "@/components/Spinner";
 
 export default {
   components: {
     Heading,
     MadeBy,
+    Nav,
     Spinner
   },
   name: "Detail",

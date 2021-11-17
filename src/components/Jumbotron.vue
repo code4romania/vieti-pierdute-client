@@ -1,14 +1,6 @@
 <template>
   <div class="p-4 lg:p-8">
-    <div>
-      <router-link
-        to="/despre"
-        class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
-      >
-        Despre proiect
-      </router-link>
-    </div>
-
+    <Nav />
     <router-link
       to="/"
       class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
@@ -44,12 +36,13 @@
 </template>
 
 <script>
-import Switch from "./Switch";
-import MadeBy from "./MadeBy";
+import MadeBy from "@/components/MadeBy";
+import Nav from "@/components/Nav";
+import Switch from "@/components/Switch";
 
 export default {
   name: "Jumbotron",
-  components: { Switch, MadeBy },
+  components: { Switch, MadeBy, Nav },
   props: {
     title: {
       type: String
