@@ -13,7 +13,17 @@
             <div class="col-span-full lg:col-span-3">
               <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
                 <div class="p-4 lg:p-8">
-                  <div>
+                  <div class="flex items-center gap-4 xl:gap-8">
+                    <router-link
+                      to="/"
+                      class="block"
+                    >
+                      <img src="../../src/assets/logo.svg" class="h-8 fill-current text-white" />
+                      <!-- <component
+                        :is="require('../../src/assets/logo.svg')"
+                        class="h-8 fill-current text-white"
+                      /> -->
+                    </router-link>
                     <router-link
                       to="/despre"
                       class="inline-block py-3 px-2 font-semibold text-base tracking-wide text-white text-opacity-60 hover:text-opacity-100"
