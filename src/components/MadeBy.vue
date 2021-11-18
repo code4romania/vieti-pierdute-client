@@ -1,9 +1,20 @@
 <template>
   <div class="MadeBy font-sans">
     <div class="inline-block mr-10">
-      <div class="mb-2 uppercase text-xs tracking-wider opacity-60">Un Proiect</div>
-      <a href="https://www.code4.ro/" class="inline-block py-4 opacity-60 hover:opacity-100" target="_blank">
-        <svg class="fill-current h-6 w-auto" viewBox="0 0 400 121.9">
+      <div
+        :class="{'text-black': !inverted}"
+        class="mb-2 uppercase text-xs tracking-wider"
+      >Un Proiect</div>
+      <a
+        :class="{ 'opacity-60 hover:opacity-100': inverted }"
+        href="https://www.code4.ro/"
+        class="inline-block py-4"
+        target="_blank"
+      >
+        <svg
+          :class="'fill-current h-' + size + ' w-auto'"
+          viewBox="0 0 400 121.9"
+        >
           <path d="M48.8,2.5,31.5,5.1,0,61l31.5,55.8,17.3,2.6L15.2,61ZM93,2.5l17.3,2.6L141.8,61l-31.5,55.8L93,119.4,126.6,61Z"></path>
           <path d="M48.8,2.5,70.9,0V61H15.2Z" fill="#f3f3f3" style="opacity: 0.7"></path>
           <path d="M48.8,119.4l22.1,2.5V61H15.2Z" fill="#d9d9d9" style="opacity: 0.7"></path>
@@ -14,9 +25,18 @@
       </a>
     </div>
     <div class="inline-block mr-10 mt-8">
-      <div class="mb-2 uppercase text-xs tracking-wider opacity-60">în parteneriat cu</div>
-      <a href="https://www.dor.ro/" class="inline-block py-4 opacity-60 hover:opacity-100" target="_blank">
-        <svg class="fill-current h-6 w-auto" viewBox="-1969.404 8843.04 215.728 67.124" xmlns="http://www.w3.org/2000/svg">
+      <div class="mb-2 uppercase text-xs tracking-wider">în parteneriat cu</div>
+      <a
+        :class="{ 'opacity-60 hover:opacity-100': inverted }"
+        href="https://www.dor.ro/"
+        class="inline-block py-4"
+        target="_blank"
+      >
+        <svg
+          :class="'fill-current h-' + size + ' w-auto'"
+          viewBox="-1969.404 8843.04 215.728 67.124"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M-1969.4 8844.2v64.8h24.828c21.728 0 34.144-12.416 34.144-32.592 0-19.788-12.416-32.2-34.144-32.2zm18.232 15.136h6.6c10.476 0 15.52 6.208 15.52 17.072 0 11.252-5.044 17.46-15.52 17.46h-6.6zm54.32 17.264c0 21.146 13.192 33.562 35.308 33.562 21.728 0 35.308-13.386 35.308-33.562s-13.58-33.56-35.308-33.56-35.308 13.386-35.308 33.56zm35.308 18.43c-10.864 0-16.3-7.566-16.3-18.43s5.432-18.43 16.3-18.43 16.3 7.566 16.3 18.43-5.436 18.432-16.3 18.432zm51.6-50.828V8909h18.24v-20.564h3.4l9.021 13.58a57.771 57.771 0 0 0 5.039 6.984h20.564c-2.91-3.492-5.238-6.6-7.76-10.088l-9.7-13c7.76-3.492 12.416-10.379 12.416-19.594 0-13.968-8.536-22.116-24.832-22.116zm18.24 14.746h7.76c5.432 0 8.148 3.1 8.148 7.566 0 4.85-2.716 7.954-8.536 7.954h-7.372z"></path>
         </svg>
       </a>
@@ -26,6 +46,16 @@
 
 <script>
   export default {
-    name: 'MadeBy'
+    name: 'MadeBy',
+    props: {
+      inverted: {
+        type: Boolean,
+        default: true
+      },
+      size: {
+        type: Number,
+        default: 6
+      }
+    }
   }
 </script>

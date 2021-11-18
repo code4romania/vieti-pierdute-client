@@ -201,6 +201,10 @@ export default {
       return process.env.VUE_APP_SITE_KEY_RECAPTCHA;
     }
   },
+  mounted() {
+    document.body.classList.remove("bg-white", "text-black");
+    document.body.classList.add("bg-black", "text-white");
+  },
   methods: {
     checkForm: function(e) {
       e.preventDefault();

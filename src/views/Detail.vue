@@ -13,7 +13,10 @@
         <div class="col-span-full">
           <div class="p-4 lg:p-8">
             <div class="flex justify-between items-center mb-8">
-             <Nav />
+              <Nav
+                :inverted="false"
+                :hasRandom="true"
+              />
               <a
                 @click="$router.go(-1)"
                 class="cursor-pointer relative w-12 h-12"
@@ -108,8 +111,6 @@ export default {
       this.storyError = null;
       this.storyLoading = true;
       if (this.$route.params.storyId) {
-        // document.body.classList.remove("bg-black", "text-white");
-        // document.body.classList.add("bg-white", "text-black");
         api.getStory(this.$route.params.storyId, (err, story) => {
           this.storyLoading = false;
           if (err) {
