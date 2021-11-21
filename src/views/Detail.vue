@@ -13,12 +13,9 @@
         <div class="col-span-full">
           <div class="p-4 lg:p-8">
             <div class="flex justify-between items-center mb-8">
-              <Nav
-                :inverted="false"
-                :hasRandom="true"
-              />
-              <a
-                @click="$router.go(-1)"
+              <Nav :inverted="false" :nextStoryId="nextStoryId" />
+              <router-link
+                to="/povesti"
                 class="cursor-pointer relative w-12 h-12"
               >
                 <span
@@ -28,7 +25,7 @@
                 <span
                   class="absolute top-0 left-0 bottom-0 right-0 m-auto transform origin-center block w-0.5 h-full bg-black rotate-45"
                 ></span>
-              </a>
+              </router-link>
             </div>
 
             <div class="max-w-4xl mb-32">
@@ -91,6 +88,11 @@ export default {
     Spinner
   },
   name: "Detail",
+  props: {
+    nextStoryId: {
+      type: String
+    }
+  },
   data: () => ({
     story: null,
     storyError: null,
