@@ -12,7 +12,7 @@
           <div class="grid grid-cols-8 gap-8 mb-8 md:mb-0">
             <div class="col-span-full lg:col-span-4">
               <div class="p-4 lg:p-8">
-               <Nav />
+                <Nav />
                 <h1 class="mt-12 mb-2 text-8xl font-light lg:text-9xl xl:text-10xl">
                   {{ (+component.victimsCount.victims).toLocaleString() }}
                 </h1>
