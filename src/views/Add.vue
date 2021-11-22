@@ -14,25 +14,34 @@
           </div>
         </Heading>
         <p class="text-2xl font-light mb-10">
-          This is a content area describing the web purpose and what users will
-          find on it. It is cool to keep it short but explanatory
+          Dacă vrei să povestești despre viața cuiva drag ție care nu-ți mai este azi alături din cauza Covid-19, te rugăm să ne lași câteva date necesare și povestea persoanei.
         </p>
         <form ref="form" @submit="checkForm" class="max-w-4xl mb-32">
           <InputGroup>
             <Input
-              label="Prenumele"
-              placeholder="Andrei"
+              label="Prenumele:"
+              placeholder="Ion/Ioana"
               name="victimFirstName"
               :error="this.errors.victimFirstName"
               v-model="story.victimFirstName"
             />
-            <Input
-              label="Numele"
-              placeholder="Popescu"
-              name="victimLastName"
-              :error="this.errors.victimLastName"
-              v-model="story.victimLastName"
-            />
+            <div class="relative">
+              <Input
+                label="Numele:"
+                placeholder="Popescu"
+                name="victimLastName"
+                :error="this.errors.victimLastName"
+                v-model="story.victimLastName"
+              />
+              <div class="absolute top-0 right-0">
+                <Checkbox
+                  name="hasLastNamePrivate"
+                  v-model="story.hasLastNamePrivate"
+                  :error="errors.hasLastNamePrivate"
+                  >Doresc să rămână privat</Checkbox
+                >
+              </div>
+            </div>
           </InputGroup>
           <InputGroup>
             <Input
@@ -42,28 +51,28 @@
               max="110"
               step="1"
               name="age"
-              placeholder="47"
+              placeholder="ani împliniți"
               :error="this.errors.age"
               v-model="story.age"
             />
             <Input
-              label="Ocupația"
+              label="Ocupația:"
               name="occupation"
-              placeholder="sau ce îi plăcea să facă?"
+              placeholder="Inginer electronist, pasionat de fotbal și istoria religiilor"
               :error="this.errors.occupation"
               v-model="story.occupation"
             />
           </InputGroup>
           <InputGroup>
             <Input
-              label="Județul"
+              label="Județul:"
               name="county"
-              placeholder="Alege judetul"
+              placeholder="Alege județul"
               v-model="story.county"
               :error="errors.county"
             />
             <Input
-              label="Localitatea"
+              label="Localitatea:"
               name="city"
               placeholder="Alege localitatea"
               v-model="story.city"
@@ -71,7 +80,7 @@
             />
           </InputGroup>
           <Input
-            label="Scrie-ne povestea în câte caractere crezi că este suficient"
+            label="Scrie-ne povestea sau ce consideri că este important să rămână scris, în câte caracatere ai nevoie:"
             name="content"
             type="textarea"
             v-model="story.content"
@@ -79,19 +88,18 @@
           />
           <Heading :level="3">Datele tale</Heading>
           <p class="text-2xl font-light mb-10">
-            This is a content area describing the web purpose and what users
-            will find on it. It is cool to keep it short but explanatory
+            Această secțiune ne ajută să te identificăm, dar nu va apărea public. Aici ar trebui sa sune altfel.
           </p>
           <InputGroup>
             <Input
-              label="Prenume:"
-              placeholder="Vasile"
+              label="Prenumele tău:"
+              placeholder="Alin/Alina"
               name="firstName"
               v-model="story.authorFirstName"
               :error="errors.authorFirstName"
             />
             <Input
-              label="Nume:"
+              label="Numele tău:"
               placeholder="Popescu"
               name="lastName"
               v-model="story.authorLastName"
@@ -99,6 +107,13 @@
             />
           </InputGroup>
           <InputGroup>
+            <Input
+              label="Relația pe care ați avut-o:"
+              placeholder="Fratele mai mic"
+              name="relation"
+              v-model="story.authorRelation"
+              :error="errors.authorLastName"
+            />
             <Input
               label="E-mail:"
               type="email"
