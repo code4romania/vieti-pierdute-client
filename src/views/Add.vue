@@ -71,20 +71,22 @@
               placeholder="Alege județul"
               name="county"
               v-model="story.county"
-              :options="this.counties"
+              :options="this.allCounties"
               :error="errors.county"
               class="col-span-2"
+              @change="this.loadCities(story.county)"
             />
-            <!-- <Select
+            <Select
               label="Localitatea:"
               placeholder="Alege localitatea"
               name="city"
+              class="col-span-2"
               v-model="story.city"
-              :options="this.cities"
+              :options="this.currentCities"
               :error="errors.city"
-              class="col-span-2 opacity-60"
-              disabled
-            /> -->
+              :class="this.currentCities.length === 0 ? 'opacity-60' : ''"
+              :disabled="this.currentCities.length === 0"
+            />
           </InputGroup>
           <Input
             label="Scrie-ne povestea sau ce consideri că este important să rămână scris, în câte caracatere ai nevoie:"
@@ -172,7 +174,7 @@
             ></reCaptcha>
             <button
               type="submit"
-              class="inline-block py-3 text-2xl underline font-normal lg:text-2xl xl:text-3xl"
+              class="inline-block py-3 text-2xl underline font-light lg:text-2xl xl:text-3xl"
             >
               Trimite povestea
             </button>
@@ -189,8 +191,8 @@ import reCaptcha from "@/api/reCaptcha";
 import { validate } from "@/lib/validate";
 import { storySchema } from "@/lib/schema";
 
-import cities from "@/data/cities.json";
-import counties from "@/data/counties.json";
+import allCounties from "@/data/counties.json";
+import allCities from "@/data/cities.json";
 
 import Nav from '@/components/Nav';
 import Heading from "@/components/Heading";
@@ -226,8 +228,9 @@ export default {
       agreeTerms2: false,
       recaptcha: null
     },
-    counties,
-    cities,
+    allCounties,
+    allCities,
+    currentCities: [],
     showRecaptcha: true
   }),
   computed: {
@@ -238,8 +241,6 @@ export default {
   mounted() {
     document.body.classList.remove("bg-white", "text-black");
     document.body.classList.add("bg-black", "text-white");
-
-    // console.log(cities, counties)
   },
   methods: {
     checkForm: function(e) {
@@ -267,6 +268,16 @@ export default {
             }
           });
       }
+    },
+    loadCities(county) {
+      this.currentCities = [];
+      this.story.city = 0;
+
+      allCities.forEach(city => {
+        if (city.county === county) {
+          this.currentCities.push(city);
+        }
+      })
     },
     reCaptchaVerified(response) {
       this.story.recaptcha = response;

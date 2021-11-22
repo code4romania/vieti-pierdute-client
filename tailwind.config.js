@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     purge: [
         "src/**/*.vue",
@@ -25,5 +27,6 @@ module.exports = {
                 white: "#ffffff",
             },
         },
+        gray: colors.trueGray,
     },
 }

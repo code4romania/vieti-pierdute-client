@@ -3,6 +3,7 @@
     <label>{{ this.label }}</label>
     <select
       :name="this.name"
+      :disabled="this.disabled"
       v-model="this.value"
       class="mt-1 block w-full bg-black pr-10 py-4 text-lg border-b border-dotted border-gray-500 focus:outline-none"
     >
@@ -51,13 +52,13 @@ export default {
       required: true,
       default: 0
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     error: {
       type: Array
     }
-  },
-  mounted() {
-    console.log(this.selectedIndex);
-    console.log(this.modelValue)
   },
   emits: ["update:modelValue"],
   computed: {

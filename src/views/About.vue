@@ -50,7 +50,7 @@
                       <router-link
                         v-if="button.href"
                         :to="button.href"
-                        class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
+                        class="inline-block py-3 text-2xl font-light lg:text-xl xl:text-2xl"
                         ><span class="underline">{{ button.text }}</span></router-link
                       >
                     </li>
