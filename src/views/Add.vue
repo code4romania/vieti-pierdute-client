@@ -123,7 +123,7 @@
               placeholder="Fratele mai mic"
               name="relation"
               v-model="story.authorRelation"
-              :error="errors.authorLastName"
+              :error="errors.authorRelation"
               class="col-span-2"
             />
             <Input
