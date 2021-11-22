@@ -1,17 +1,16 @@
 <template>
   <div>
     <label>{{ this.label }}</label>
-    <!-- TODO: handle type textarea with h-32 additional class -->
-    <input
-      :type="this.type"
-      class="appearance-none block text-lg w-full bg-transparent mt-4 pb-2 border-b border-dotted border-gray-500 focus:outline-none focus:border-white placeholder-gray-500"
+    <select
       :name="this.name"
-      :min="this.min"
-      :max="this.max"
-      :step="this.step"
-      :placeholder="this.placeholder"
       v-model="this.value"
-    />
+      class="mt-1 block w-full bg-black pr-10 py-4 text-lg border-b border-dotted border-gray-500 focus:outline-none"
+    >
+      <option :value="0">{{this.placeholder}}</option>
+      <option v-for="(option) in this.options" :value="option.name" v-bind:key="'option-' + this.name + '-' + option.id">
+        {{ option.name }}
+      </option>
+    </select>
     <FormError
       v-for="(message, index) in error"
       v-bind:key="'error-' + index"
@@ -23,13 +22,17 @@
 import FormError from './FormError';
 
 export default {
-  name: "Input",
+  name: "Select",
   components: {
     FormError
   },
   props: {
     name: {
       type: String,
+      required: true
+    },
+    options: {
+      type: Array,
       required: true
     },
     modelValue: {
@@ -43,22 +46,18 @@ export default {
       type: String,
       required: false
     },
-    type: {
-      type: String,
-      default: "text"
-    },
-    min: {
-      type: String
-    },
-    max: {
-      type: String
-    },
-    step: {
-      type: String
+    selectedIndex: {
+      type: Number,
+      required: true,
+      default: 0
     },
     error: {
       type: Array
     }
+  },
+  mounted() {
+    console.log(this.selectedIndex);
+    console.log(this.modelValue)
   },
   emits: ["update:modelValue"],
   computed: {

@@ -66,22 +66,25 @@
             />
           </InputGroup>
           <InputGroup>
-            <Input
+            <Select
               label="Județul:"
-              name="county"
               placeholder="Alege județul"
+              name="county"
               v-model="story.county"
+              :options="this.counties"
               :error="errors.county"
               class="col-span-2"
             />
-            <Input
+            <!-- <Select
               label="Localitatea:"
-              name="city"
               placeholder="Alege localitatea"
+              name="city"
               v-model="story.city"
+              :options="this.cities"
               :error="errors.city"
-              class="col-span-2"
-            />
+              class="col-span-2 opacity-60"
+              disabled
+            /> -->
           </InputGroup>
           <Input
             label="Scrie-ne povestea sau ce consideri că este important să rămână scris, în câte caracatere ai nevoie:"
@@ -186,9 +189,13 @@ import reCaptcha from "@/api/reCaptcha";
 import { validate } from "@/lib/validate";
 import { storySchema } from "@/lib/schema";
 
+import cities from "@/data/cities.json";
+import counties from "@/data/counties.json";
+
 import Nav from '@/components/Nav';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
+import Select from "@/components/Select";
 import InputGroup from "@/components/InputGroup";
 import Checkbox from "@/components/Checkbox";
 
@@ -198,6 +205,7 @@ export default {
     InputGroup,
     Heading,
     Input,
+    Select,
     Checkbox,
     reCaptcha
   },
@@ -208,8 +216,8 @@ export default {
       victimLastName: null,
       age: null,
       occupation: null,
-      city: null,
-      county: null,
+      city: 0,
+      county: 0,
       content: null,
       authorFirstName: null,
       authorLastName: null,
@@ -218,6 +226,8 @@ export default {
       agreeTerms2: false,
       recaptcha: null
     },
+    counties,
+    cities,
     showRecaptcha: true
   }),
   computed: {
@@ -228,6 +238,8 @@ export default {
   mounted() {
     document.body.classList.remove("bg-white", "text-black");
     document.body.classList.add("bg-black", "text-white");
+
+    // console.log(cities, counties)
   },
   methods: {
     checkForm: function(e) {
@@ -246,7 +258,7 @@ export default {
         api
           .postStory(this.story)
           .then(response => {
-            // TODO: update screen with thank you, e-mail notification & maybe smth to click further on?
+            // TODO: update screen with thank you, e-mail notification? & maybe smth to click further on?
             console.log(response);
           })
           .catch(error => {
@@ -257,7 +269,6 @@ export default {
       }
     },
     reCaptchaVerified(response) {
-      console.log(response);
       this.story.recaptcha = response;
     },
     recaptchaExpired() {

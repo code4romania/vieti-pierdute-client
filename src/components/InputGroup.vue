@@ -7,7 +7,7 @@ export default {
     return h(
         "div",
         {
-          class: 'grid gap-8 grid-cols-1 gap-4 sm:gap-16 mb-7' + (!this.fullWidth ? ' sm:grid-cols-4 relative': '')
+          class: 'mb-7 ' + (!this.fullWidth ? 'grid gap-4 sm:gap-8 sm:grid-cols-4': '')
         },
         this.$slots.default()
     );
