@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Detail v-show="storyId" />
+    <Detail v-show="storyId" :nextStoryId="nextStoryId" />
     <div v-if="pageLoading" class="my-16">
       <Spinner />
     </div>
@@ -143,7 +143,8 @@ export default {
       pageLoading: false,
       banners: [],
       bannersError: null,
-      bannersLoading: false
+      bannersLoading: false,
+      nextStoryId: null
     };
   },
   computed: {
@@ -243,6 +244,16 @@ export default {
     handleSwitchView({ list, gallery }) {
       this.list = list;
       this.gallery = gallery;
+    }
+  },
+  watch: {
+    $route() {
+      const random = Math.floor(Math.random() * this.stories.length);
+      this.nextStoryId = this.stories[random] && this.stories[random].id;
+    },
+    stories(val) {
+      const random = Math.floor(Math.random() * val.length);
+      this.nextStoryId = val[random] && val[random].id;
     }
   }
 };
