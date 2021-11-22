@@ -16,7 +16,7 @@
         <p class="text-2xl font-light mb-10">
           Dacă vrei să povestești despre viața cuiva drag ție care nu-ți mai este azi alături din cauza Covid-19, te rugăm să ne lași câteva date necesare și povestea persoanei.
         </p>
-        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32">
+        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32 pr-4 md:px-0">
           <InputGroup>
             <Input
               label="Prenumele:"
@@ -24,23 +24,23 @@
               name="victimFirstName"
               :error="this.errors.victimFirstName"
               v-model="story.victimFirstName"
+              class="col-span-2"
             />
-            <div class="relative">
+            <div class="col-span-2">
               <Input
                 label="Numele:"
                 placeholder="Popescu"
                 name="victimLastName"
                 :error="this.errors.victimLastName"
                 v-model="story.victimLastName"
+                class="mb-4"
               />
-              <div class="absolute top-0 right-0">
-                <Checkbox
-                  name="hasLastNamePrivate"
-                  v-model="story.hasLastNamePrivate"
-                  :error="errors.hasLastNamePrivate"
-                  >Doresc să rămână privat</Checkbox
-                >
-              </div>
+              <Checkbox
+                name="hasLastNamePrivate"
+                v-model="story.hasLastNamePrivate"
+                :error="errors.hasLastNamePrivate"
+                >Doresc să rămână privat</Checkbox
+              >
             </div>
           </InputGroup>
           <InputGroup>
@@ -54,6 +54,7 @@
               placeholder="ani împliniți"
               :error="this.errors.age"
               v-model="story.age"
+              class="col-span-1"
             />
             <Input
               label="Ocupația:"
@@ -61,6 +62,7 @@
               placeholder="Inginer electronist, pasionat de fotbal și istoria religiilor"
               :error="this.errors.occupation"
               v-model="story.occupation"
+              class="col-span-1 sm:col-span-3"
             />
           </InputGroup>
           <InputGroup>
@@ -70,6 +72,7 @@
               placeholder="Alege județul"
               v-model="story.county"
               :error="errors.county"
+              class="col-span-2"
             />
             <Input
               label="Localitatea:"
@@ -77,6 +80,7 @@
               placeholder="Alege localitatea"
               v-model="story.city"
               :error="errors.city"
+              class="col-span-2"
             />
           </InputGroup>
           <Input
@@ -97,6 +101,7 @@
               name="firstName"
               v-model="story.authorFirstName"
               :error="errors.authorFirstName"
+              class="col-span-2"
             />
             <Input
               label="Numele tău:"
@@ -104,6 +109,7 @@
               name="lastName"
               v-model="story.authorLastName"
               :error="errors.authorLastName"
+              class="col-span-2"
             />
           </InputGroup>
           <InputGroup>
@@ -113,6 +119,7 @@
               name="relation"
               v-model="story.authorRelation"
               :error="errors.authorLastName"
+              class="col-span-2"
             />
             <Input
               label="E-mail:"
@@ -121,6 +128,7 @@
               name="email"
               v-model="story.authorEmail"
               :error="errors.authorEmail"
+              class="col-span-2"
             />
           </InputGroup>
           <InputGroup fullWidth>
@@ -144,7 +152,7 @@
             >
           </InputGroup>
           <div
-            class="flex flex-col md:flex-row md:justify-between md:items-center gap-4"
+            class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mt-12"
           >
             <reCaptcha
               v-if="showRecaptcha"
@@ -157,6 +165,7 @@
               @verify="reCaptchaVerified"
               @expire="recaptchaExpired"
               @fail="recaptchaFailed"
+              class="mb-8 md:mb-0"
             ></reCaptcha>
             <button
               type="submit"
