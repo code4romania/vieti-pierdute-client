@@ -36,10 +36,11 @@
               </div>
             </div>
             <div class="col-span-full lg:col-span-4">
-              <div class="p-4 lg:p-8">
-                <p class="text-2xl text-white text-opacity-60  font-light lg:mt-64 xl:mt-80">
-                  {{ component.content }}
-                </p>
+              <div class="content-wrap p-4 lg:p-8">
+                <Markdown
+                  class="text-2xl text-white text-opacity-60  font-light lg:mt-64 xl:mt-80"
+                  :source="component.content"
+                />
               </div>
             </div>
           </div>
@@ -50,6 +51,8 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+
 import api from "@/api";
 import MadeBy from "@/components/MadeBy";
 import Nav from "@/components/Nav";
@@ -58,6 +61,7 @@ import Spinner from "@/components/Spinner";
 export default {
   name: "Home",
   components: {
+    Markdown,
     MadeBy,
     Nav,
     Spinner

@@ -62,8 +62,9 @@
                 <img src="https://picsum.photos/id/1005/900/450" />
               </div>
 
-              <!-- TODO: we should render the markdown here -->
-              <div class="text-lg leading-relaxed">{{ story.content }}</div>
+              <div class="content-wrap text-lg leading-relaxed">
+                <Markdown :source="story.content" />
+              </div>
             </div>
           </div>
         </div>
@@ -73,6 +74,8 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+
 import api from "@/api";
 
 import Heading from "@/components/Heading";
@@ -82,6 +85,7 @@ import Spinner from "@/components/Spinner";
 
 export default {
   components: {
+    Markdown,
     Heading,
     MadeBy,
     Nav,
