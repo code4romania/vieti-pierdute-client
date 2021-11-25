@@ -262,7 +262,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .listing-transition-enter-active {
   transition: all 0.35s ease;
 }
