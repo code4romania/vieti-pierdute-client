@@ -13,9 +13,11 @@
         v-bind:key="story.id"
       >
         <component
-          :is="story.url ? 'router-link' : 'div'"
+          :is="story.isExternal && story.externalLink ? 'a' : story.url ? 'router-link' : 'div'"
           :class="story.url ? 'hover:text-gray-400' : 'text-gray-400'"
           :to="story.url"
+          :href="story.externalLink"
+          :target="story.isExternal ? '_blank' : '_self'"
           >{{ story.title }}
         </component>
       </div>

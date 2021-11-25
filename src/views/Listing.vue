@@ -163,6 +163,7 @@ export default {
       );
     },
     storiesList: function() {
+      console.log(this.stories)
       const victimsCount =
         this.page && +this.page.components[0].victimsCount.victims;
       const list = this.stories.map(story => ({
@@ -173,7 +174,9 @@ export default {
         address: `${story.county}, ${story.city}`,
         image: `https://picsum.photos/id/1005/900/450`,
         // image: `${story.image.url}`,
-        url: `/poveste/${story.id}`
+        url: `/poveste/${story.id}`,
+        isExternal: story.isExternal,
+        externalLink: story.externalLink
       }));
       const rows =
         this.stories.length > 0 &&
