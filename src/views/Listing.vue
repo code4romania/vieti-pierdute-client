@@ -51,7 +51,7 @@
                             :onSwitchView="handleSwitchView"
                           />
                         </div>
-                        <Item :row="item" :banner="bannersList[index]" :index="index" />
+                        <Item :row="item" :banner="bannersList[index * 2]" :index="index" />
                       </DynamicScrollerItem>
                     </template>
                   </DynamicScroller>
@@ -168,10 +168,10 @@ export default {
         this.page && +this.page.components[0].victimsCount.victims;
       const list = this.stories.map(story => ({
         id: story.id,
-        title: `${story.victimFirstName} ${story.victimLastName || ''}`,
+        title: `${story.victimFirstName} ${ typeof story.victimLastName !== 'undefined' ? story.victimLastName : ''}`,
         age: story.age,
         occupation: story.occupation,
-        address: `${story.county}, ${story.city}`,
+        address: `${story.city}, ${story.county}`,
         image: `https://picsum.photos/id/1005/900/450`,
         // image: `${story.image.url}`,
         url: `/poveste/${story.id}`,
