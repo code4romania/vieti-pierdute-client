@@ -15,18 +15,18 @@
       </label>
     </div>
   </div>
-  <InputError
+  <FormError
     v-for="(message, index) in error"
     v-bind:key="'error-' + index"
-  >{{ message }}</InputError>
+  >{{ message }}</FormError>
 </template>
 
 <script>
-import InputError from './InputError';
+import FormError from './FormError';
 export default {
   name: "Checkbox",
   components: {
-    InputError
+    FormError
   },
   props: {
     name: {

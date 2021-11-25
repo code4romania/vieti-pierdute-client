@@ -1,9 +1,10 @@
 <template>
   <div class="w-full flex flex-col">
     <div
-      class="w-full bg-white text-black text-center py-2 my-6 text-5xl lg:text4xl leading-relaxed"
+      class="w-full bg-white text-black p-4 px-8 my-6 text-3xl lg:text4xl leading-snug"
       v-if="banner"
     >
+      <div class="text-6xl mb-2">{{ index }}</div>
       {{ banner.content }}
     </div>
     <div class="flex w-full flex-col md:flex-row" v-if="row">
@@ -38,6 +39,10 @@ export default {
     banner: {
       type: Object,
       default: null
+    },
+    index: {
+      type: Number,
+      default: 0
     }
   }
 };

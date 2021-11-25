@@ -14,25 +14,34 @@
           </div>
         </Heading>
         <p class="text-2xl font-light mb-10">
-          This is a content area describing the web purpose and what users will
-          find on it. It is cool to keep it short but explanatory
+          Dacă vrei să povestești despre viața cuiva drag ție care nu-ți mai este azi alături din cauza Covid-19, te rugăm să ne lași câteva date necesare și povestea persoanei.
         </p>
-        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32">
+        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32 pr-4 md:px-0">
           <InputGroup>
             <Input
-              label="Prenumele"
-              placeholder="Andrei"
+              label="Prenumele:"
+              placeholder="Ion/Ioana"
               name="victimFirstName"
               :error="this.errors.victimFirstName"
               v-model="story.victimFirstName"
+              class="col-span-2"
             />
-            <Input
-              label="Numele"
-              placeholder="Popescu"
-              name="victimLastName"
-              :error="this.errors.victimLastName"
-              v-model="story.victimLastName"
-            />
+            <div class="col-span-2">
+              <Input
+                label="Numele:"
+                placeholder="Popescu"
+                name="victimLastName"
+                :error="this.errors.victimLastName"
+                v-model="story.victimLastName"
+                class="mb-4"
+              />
+              <Checkbox
+                name="hasLastNamePrivate"
+                v-model="story.hasLastNamePrivate"
+                :error="errors.hasLastNamePrivate"
+                >Doresc să rămână privat</Checkbox
+              >
+            </div>
           </InputGroup>
           <InputGroup>
             <Input
@@ -42,36 +51,45 @@
               max="110"
               step="1"
               name="age"
-              placeholder="47"
+              placeholder="ani împliniți"
               :error="this.errors.age"
               v-model="story.age"
+              class="col-span-1"
             />
             <Input
-              label="Ocupația"
+              label="Ocupația:"
               name="occupation"
-              placeholder="sau ce îi plăcea să facă?"
+              placeholder="Inginer electronist, pasionat de fotbal și istoria religiilor"
               :error="this.errors.occupation"
               v-model="story.occupation"
+              class="col-span-1 sm:col-span-3"
             />
           </InputGroup>
           <InputGroup>
-            <Input
-              label="Județul"
+            <Select
+              label="Județul:"
+              placeholder="Alege județul"
               name="county"
-              placeholder="Alege judetul"
               v-model="story.county"
+              :options="this.allCounties"
               :error="errors.county"
+              class="col-span-2"
+              @change="this.loadCities(story.county)"
             />
-            <Input
-              label="Localitatea"
-              name="city"
+            <Select
+              label="Localitatea:"
               placeholder="Alege localitatea"
+              name="city"
+              class="col-span-2"
               v-model="story.city"
+              :options="this.currentCities"
               :error="errors.city"
+              :class="this.currentCities.length === 0 ? 'opacity-60' : ''"
+              :disabled="this.currentCities.length === 0"
             />
           </InputGroup>
           <Input
-            label="Scrie-ne povestea în câte caractere crezi că este suficient"
+            label="Scrie-ne povestea sau ce consideri că este important să rămână scris, în câte caracatere ai nevoie:"
             name="content"
             type="textarea"
             v-model="story.content"
@@ -79,26 +97,35 @@
           />
           <Heading :level="3">Datele tale</Heading>
           <p class="text-2xl font-light mb-10">
-            This is a content area describing the web purpose and what users
-            will find on it. It is cool to keep it short but explanatory
+            Această secțiune ne ajută să te identificăm, dar nu va apărea public. Aici ar trebui sa sune altfel.
           </p>
           <InputGroup>
             <Input
-              label="Prenume:"
-              placeholder="Vasile"
+              label="Prenumele tău:"
+              placeholder="Alin/Alina"
               name="firstName"
               v-model="story.authorFirstName"
               :error="errors.authorFirstName"
+              class="col-span-2"
             />
             <Input
-              label="Nume:"
+              label="Numele tău:"
               placeholder="Popescu"
               name="lastName"
               v-model="story.authorLastName"
               :error="errors.authorLastName"
+              class="col-span-2"
             />
           </InputGroup>
           <InputGroup>
+            <Input
+              label="Relația pe care ați avut-o:"
+              placeholder="Fratele mai mic"
+              name="relation"
+              v-model="story.authorRelation"
+              :error="errors.authorRelation"
+              class="col-span-2"
+            />
             <Input
               label="E-mail:"
               type="email"
@@ -106,6 +133,7 @@
               name="email"
               v-model="story.authorEmail"
               :error="errors.authorEmail"
+              class="col-span-2"
             />
           </InputGroup>
           <InputGroup fullWidth>
@@ -129,7 +157,7 @@
             >
           </InputGroup>
           <div
-            class="flex flex-col md:flex-row md:justify-between md:items-center gap-4"
+            class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mt-12"
           >
             <reCaptcha
               v-if="showRecaptcha"
@@ -142,10 +170,11 @@
               @verify="reCaptchaVerified"
               @expire="recaptchaExpired"
               @fail="recaptchaFailed"
+              class="mb-8 md:mb-0"
             ></reCaptcha>
             <button
               type="submit"
-              class="inline-block py-3 text-2xl underline font-normal lg:text-2xl xl:text-3xl"
+              class="inline-block py-3 text-2xl underline font-light lg:text-2xl xl:text-3xl"
             >
               Trimite povestea
             </button>
@@ -162,9 +191,13 @@ import reCaptcha from "@/api/reCaptcha";
 import { validate } from "@/lib/validate";
 import { storySchema } from "@/lib/schema";
 
+import allCounties from "@/data/counties.json";
+import allCities from "@/data/cities.json";
+
 import Nav from '@/components/Nav';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
+import Select from "@/components/Select";
 import InputGroup from "@/components/InputGroup";
 import Checkbox from "@/components/Checkbox";
 
@@ -174,6 +207,7 @@ export default {
     InputGroup,
     Heading,
     Input,
+    Select,
     Checkbox,
     reCaptcha
   },
@@ -184,8 +218,8 @@ export default {
       victimLastName: null,
       age: null,
       occupation: null,
-      city: null,
-      county: null,
+      city: 0,
+      county: 0,
       content: null,
       authorFirstName: null,
       authorLastName: null,
@@ -194,6 +228,9 @@ export default {
       agreeTerms2: false,
       recaptcha: null
     },
+    allCounties,
+    allCities,
+    currentCities: [],
     showRecaptcha: true
   }),
   computed: {
@@ -222,7 +259,7 @@ export default {
         api
           .postStory(this.story)
           .then(response => {
-            // TODO: update screen with thank you, e-mail notification & maybe smth to click further on?
+            // TODO: update screen with thank you, e-mail notification? & maybe smth to click further on?
             console.log(response);
           })
           .catch(error => {
@@ -232,8 +269,17 @@ export default {
           });
       }
     },
+    loadCities(county) {
+      this.currentCities = [];
+      this.story.city = 0;
+
+      allCities.forEach(city => {
+        if (city.county === county) {
+          this.currentCities.push(city);
+        }
+      })
+    },
     reCaptchaVerified(response) {
-      console.log(response);
       this.story.recaptcha = response;
     },
     recaptchaExpired() {

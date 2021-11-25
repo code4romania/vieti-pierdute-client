@@ -26,7 +26,7 @@
         </a>
       </div>
       <div>
-        <div class="mb-2 uppercase text-xs tracking-wider">în parteneriat cu</div>
+        <div class="mb-2 uppercase text-xs tracking-wider whitespace-nowrap">în parteneriat cu</div>
         <a
           :class="{ 'opacity-60 hover:opacity-100': inverted }"
           href="https://www.dor.ro/"

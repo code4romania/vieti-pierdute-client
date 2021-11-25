@@ -51,7 +51,7 @@
                             :onSwitchView="handleSwitchView"
                           />
                         </div>
-                        <Item :row="item" :banner="bannersList[index]" />
+                        <Item :row="item" :banner="bannersList[index]" :index="index" />
                       </DynamicScrollerItem>
                     </template>
                   </DynamicScroller>
@@ -68,7 +68,7 @@
                       v-if="storiesList.length > 0"
                       :items="storiesList"
                       :min-item-size="200"
-                      class="listing-list h-screen"
+                      class="listing-list h-screen pb-28"
                       key-field="index"
                     >
                       <template v-slot="{ item, index, active }">
@@ -133,8 +133,8 @@ export default {
   },
   data: () => {
     return {
-      list: true,
-      gallery: false,
+      list: false,
+      gallery: true,
       stories: [],
       storiesError: null,
       storiesLoading: false,
@@ -168,7 +168,7 @@ export default {
         this.page && +this.page.components[0].victimsCount.victims;
       const list = this.stories.map(story => ({
         id: story.id,
-        title: `${story.victimFirstName} ${story.victimLastName}`,
+        title: `${story.victimFirstName} ${story.victimLastName || ''}`,
         age: story.age,
         occupation: story.occupation,
         address: `${story.county}, ${story.city}`,
@@ -182,7 +182,7 @@ export default {
         this.stories.length > 0 &&
         victimsCount &&
         [
-          ...shuffle([...list, ...this.placeholdersList(list.length * 4)]),
+          ...shuffle([...list, ...this.placeholdersList(list.length)]),
           ...this.placeholdersList(victimsCount - list.length * 5)
         ].reduce((result, item, i) => {
           const rowIndex = Math.floor(i / 2);

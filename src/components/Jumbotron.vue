@@ -3,7 +3,7 @@
     <Nav />
     <router-link
       to="/"
-      class="relative inline-block my-5 py-3 pl-14 text-7xl font-normal"
+      class="relative inline-block my-5 py-3 pl-14 text-7xl font-light"
       v-if="title"
     >
       <span
@@ -21,7 +21,7 @@
         <router-link
           v-if="button.href"
           :to="button.href"
-          class="inline-block py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
+          class="inline-block py-3 text-2xl font-light lg:text-xl xl:text-2xl"
           ><span class="underline">{{ button.text }}</span></router-link
         >
       </li>

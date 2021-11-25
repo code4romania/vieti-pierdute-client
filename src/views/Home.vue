@@ -27,7 +27,7 @@
                     <router-link
                       v-if="button.href"
                       :to="button.href"
-                      class="inline-block mb-2 py-3 text-2xl font-normal lg:text-xl xl:text-2xl"
+                      class="inline-block mb-2 py-3 text-2xl font-light lg:text-xl xl:text-2xl"
                       ><span class="underline">{{ button.text }}</span></router-link
                     >
                   </li>
@@ -37,7 +37,7 @@
             </div>
             <div class="col-span-full lg:col-span-4">
               <div class="p-4 lg:p-8">
-                <p class="text-2xl text-white text-opacity-60  font-normal lg:mt-64 xl:mt-80">
+                <p class="text-2xl text-white text-opacity-60  font-light lg:mt-64 xl:mt-80">
                   {{ component.content }}
                 </p>
               </div>

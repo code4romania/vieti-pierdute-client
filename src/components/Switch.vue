@@ -4,14 +4,14 @@
     :class="{ 'opacity-60 border-r-0': list }"
     @click="switchView"
   >
-    Galerie
+    Poveștile
   </button>
   <button
     class="inline-block border border-white p-3 text-base leading-4 uppercase font-thin tracking-widest"
     :class="{ 'opacity-60 border-l-0': gallery }"
     @click="switchView"
   >
-    Listă
+    Oamenii
   </button>
 </template>
 
