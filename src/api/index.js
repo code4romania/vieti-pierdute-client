@@ -19,9 +19,8 @@ const getMany = (path, cb) =>
     })
     .catch(error => cb(error, null));
 
-const post = (path, body) => {
+const post = (path, body) =>
   axios.post(BASE_URL + "/stories", body);
-};
 
 const getPage = (slug, cb) => getOne(`/pages?slug=${slug}`, cb, true);
 const getStories = cb => getMany("/stories", cb);
