@@ -10,13 +10,20 @@
             ></span>
           </a>
           <div class="pl-10">
-            Adaugă povestea cuiva drag
+            <span v-if="!isSend">Adaugă povestea cuiva drag</span>
+            <span v-else>Ai trimis o poveste</span>
           </div>
         </Heading>
-        <p class="text-2xl font-light mb-10">
-          Dacă vrei să povestești despre viața cuiva drag ție care nu-ți mai este azi alături din cauza Covid-19, te rugăm să ne lași câteva date necesare și povestea persoanei.
+        <p class="text-2xl font-light mb-10 max-w-4xl">
+          Cineva drag nu-ți mai este azi alături din cauza Covid-19.<br/>Povestea vieții însă va rămâne scrisă mereu.
         </p>
-        <form ref="form" @submit="checkForm" class="max-w-4xl mb-32 pr-4 md:px-0">
+        <div v-if="isSend" class="mb-10">
+          <div class="text-4xl">Mulțumim,</div>
+          <p>povestea ta a fost trimisă către echipa noastră.</p>
+          <p>Te vom contacta în scurt timp pentru a ne asigura că toate datele pe care le-am primit sunt corecte.</p>
+          <p>Te anunțăm că este posibil ca povestea pe care ai scris-o să sufere mici modificări la editare, fără să îi fie alterat în vreun fel sensul. Din acest motiv, te rugăm să ne permiți câteva zile până la publicarea ei. Pentru orice clarificări, ne poți contacta la contact@vietipierdute.ro</p>
+        </div> 
+        <form v-else ref="form" @submit="checkForm" class="max-w-4xl mb-32 pr-4 md:px-0">
           <InputGroup>
             <Input
               label="Prenumele:"
@@ -84,20 +91,20 @@
               v-model="story.city"
               :options="this.currentCities"
               :error="errors.city"
-              :class="this.currentCities.length === 0 ? 'opacity-60' : ''"
               :disabled="this.currentCities.length === 0"
             />
           </InputGroup>
-          <Input
-            label="Scrie-ne povestea sau ce consideri că este important să rămână scris, în câte caracatere ai nevoie:"
+          <Textarea
+            label="Povestea ei/lui:"
+            placeholder="Povestește-i viața sau momente importante care să rămână scrise despre persoana pe care ai pierdut-o."
             name="content"
             type="textarea"
             v-model="story.content"
             :error="errors.content"
           />
-          <Heading :level="3">Datele tale</Heading>
+          <Heading :level="3" class="mt-16">Datele tale</Heading>
           <p class="text-2xl font-light mb-10">
-            Această secțiune ne ajută să te identificăm, dar nu va apărea public. Aici ar trebui sa sune altfel.
+            Te vom contacta pentru a ne asigura că toate datele introduse sunt corecte.
           </p>
           <InputGroup>
             <Input
@@ -141,9 +148,7 @@
               name="terms"
               v-model="story.agreeTerms"
               :error="errors.agreeTerms"
-              >This is a content area describing the web purpose and what users
-              will find on it. It is cool to keep it short but
-              explanatory</Checkbox
+              >Prin completarea acestui formular declar că sunt de acord cu prelucrarea datelor personale furnizate în conformitate cu prevederile specificate în <a href="https://docs.google.com/document/d/12Xb0j7c511iWwymK7TP1C9UKypEQPhp5mSJqPVE5Utg/edit" target="_blank" class="underline">termenii și condițiile</a> de utilizare ale acestui website.</Checkbox
             >
           </InputGroup>
           <InputGroup fullWidth>
@@ -151,9 +156,7 @@
               name="gdpr"
               v-model="story.agreeTerms2"
               :error="errors.agreeTerms2"
-              >This is a content area describing the web purpose and what users
-              will find on it. It is cool to keep it short but
-              explanatory</Checkbox
+              >Declar că am citit și sunt de acord cu <a href="https://docs.google.com/document/d/1k0q1V-J5vhbUcXDqUXVKNjLUaTQkYqM6VRJiuu0dCpQ/edit" target="_blank" class="underline">politica de confidențialitate</a> și <a href="https://docs.google.com/document/d/12Xb0j7c511iWwymK7TP1C9UKypEQPhp5mSJqPVE5Utg/edit" target="_blank" class="underline">termenii și condițiile</a> de utilizare ale acestui website.</Checkbox
             >
           </InputGroup>
           <div
@@ -184,6 +187,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import api from "@/api";
 import reCaptcha from "@/api/reCaptcha";
@@ -197,6 +201,7 @@ import allCities from "@/data/cities.json";
 import Nav from '@/components/Nav';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
+import Textarea from "@/components/Textarea";
 import Select from "@/components/Select";
 import InputGroup from "@/components/InputGroup";
 import Checkbox from "@/components/Checkbox";
@@ -207,6 +212,7 @@ export default {
     InputGroup,
     Heading,
     Input,
+    Textarea,
     Select,
     Checkbox,
     reCaptcha
@@ -231,7 +237,8 @@ export default {
     allCounties,
     allCities,
     currentCities: [],
-    showRecaptcha: true
+    showRecaptcha: true,
+    isSend: false
   }),
   computed: {
     recaptchSiteKey() {
@@ -261,6 +268,7 @@ export default {
           .then(response => {
             // TODO: update screen with thank you, e-mail notification? & maybe smth to click further on?
             console.log(response);
+            this.isSend = true;
           })
           .catch(error => {
             if (error.response) {

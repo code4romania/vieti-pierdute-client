@@ -5,7 +5,7 @@
       :name="this.name"
       :disabled="this.disabled"
       v-model="this.value"
-      class="mt-1 block w-full bg-black pr-10 py-4 text-lg border-b border-dotted border-gray-500 focus:outline-none"
+      class="mt-1 block w-full bg-black pr-10 py-4 text-lg border-b border-gray-500 focus:outline-none"
     >
       <option :value="0">{{this.placeholder}}</option>
       <option v-for="(option) in this.options" :value="option.name" v-bind:key="'option-' + this.name + '-' + option.id">
