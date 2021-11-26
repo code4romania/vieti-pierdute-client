@@ -7,3 +7,9 @@
     name: 'Spinner'
   }
 </script>
+
+<style scoped>
+  .loader {
+    color: #ffffff;
+  }
+</style>
