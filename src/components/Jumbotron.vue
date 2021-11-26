@@ -12,9 +12,9 @@
       {{ title }}
     </router-link>
 
-    <p class="mb-8 text-2xl font-thin text-white text-opacity-80">
-      {{ content }}
-    </p>
+    <div class="mb-8 text-2xl font-thin text-white text-opacity-80">
+      <Markdown :source="content" />
+    </div>
 
     <ul v-if="buttons" class="mb-8">
       <li v-for="button in buttons" v-bind:key="button.id">
@@ -36,13 +36,20 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+
 import MadeBy from "@/components/MadeBy";
 import Nav from "@/components/Nav";
 import Switch from "@/components/Switch";
 
 export default {
   name: "Jumbotron",
-  components: { Switch, MadeBy, Nav },
+  components: {
+    Markdown,
+    Switch,
+    MadeBy,
+    Nav
+  },
   props: {
     title: {
       type: String
