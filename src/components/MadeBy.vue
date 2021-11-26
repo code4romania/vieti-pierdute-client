@@ -13,7 +13,7 @@
           target="_blank"
         >
           <svg
-            :class="'fill-current h-' + size + ' w-auto'"
+            :class="'fill-current h-10 w-auto'"
             viewBox="0 0 400 121.9"
           >
             <path d="M48.8,2.5,31.5,5.1,0,61l31.5,55.8,17.3,2.6L15.2,61ZM93,2.5l17.3,2.6L141.8,61l-31.5,55.8L93,119.4,126.6,61Z"></path>
@@ -30,11 +30,11 @@
         <a
           :class="{ 'opacity-60 hover:opacity-100': inverted }"
           href="https://www.dor.ro/"
-          class="inline-block py-4"
+          class="inline-block py-5"
           target="_blank"
         >
           <svg
-            :class="'fill-current h-' + (size - 2) + ' w-auto'"
+            :class="'fill-current h-8 w-auto'"
             viewBox="-1969.404 8843.04 215.728 67.124"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -53,10 +53,6 @@
       inverted: {
         type: Boolean,
         default: true
-      },
-      size: {
-        type: Number,
-        default: 8
       }
     }
   }

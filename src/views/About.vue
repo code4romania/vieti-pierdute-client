@@ -9,7 +9,7 @@
         v-bind:key="component.id"
       >
         <div class="max-w-screen-2xl mx-auto">
-          <div class="grid grid-cols-8 gap-16">
+          <div class="grid grid-cols-8 lg:gap-16">
             <div class="col-span-full">
               <div class="p-4 lg:p-8">
                 <div class="flex justify-between items-center mb-8">
@@ -29,19 +29,18 @@
                 </div>
 
                 <div class="max-w-6xl mb-32">
-                  <div class="relative block w-full leading-tight font-light mt-5 pt-3 mb-8 pb-0 text-3xl lg:text-5xl">
+                  <div class="relative block w-full leading-tight font-light mt-5 pt-3 mb-8 pb-0 text-2xl lg:text-4xl">
                     {{component.title}}
                   </div>
 
                   <MadeBy
                     :inverted="false"
-                    :size="10"
                     class="mb-8"
                   />
 
                   <div class="lg:pr-96 mb-8">
-                    <div class="content-wrap text-xl lg:text-2xl font-thin">
-                      {{component.content}}
+                    <div class="content-wrap text-lg lg:text-2xl font-thin">
+                      <Markdown :source="component.content" />
                     </div>
                   </div> 
 
@@ -97,6 +96,8 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+
 import api from "@/api";
 import MadeBy from "@/components/MadeBy.vue";
 import Spinner from "@/components/Spinner.vue";
@@ -105,6 +106,7 @@ import Nav from "@/components/Nav";
 export default {
   name: "About",
   components: {
+    Markdown,
     MadeBy,
     Spinner,
     Nav
@@ -144,7 +146,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .content-wrap p {
   margin-bottom: 32px;
 }
