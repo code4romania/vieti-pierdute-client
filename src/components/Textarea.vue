@@ -1,13 +1,9 @@
 <template>
   <div>
     <label>{{ this.label }}</label>
-    <input
-      :type="this.type"
-      class="appearance-none block text-lg w-full bg-transparent mt-4 pb-2 border-b border-gray-500 focus:outline-none focus:border-white placeholder-gray-500"
+    <textarea
+      class="appearance-none block text-lg w-full h-52 bg-transparent mt-4 pb-2 border-b border-gray-500 focus:outline-none focus:border-white placeholder-gray-500"
       :name="this.name"
-      :min="this.min"
-      :max="this.max"
-      :step="this.step"
       :placeholder="this.placeholder"
       v-model="this.value"
     />
@@ -22,7 +18,7 @@
 import FormError from './FormError';
 
 export default {
-  name: "Input",
+  name: "Textarea",
   components: {
     FormError
   },
@@ -41,19 +37,6 @@ export default {
     placeholder: {
       type: String,
       required: false
-    },
-    type: {
-      type: String,
-      default: "text"
-    },
-    min: {
-      type: String
-    },
-    max: {
-      type: String
-    },
-    step: {
-      type: String
     },
     error: {
       type: Array
