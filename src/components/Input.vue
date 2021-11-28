@@ -3,12 +3,13 @@
     <label>{{ this.label }}</label>
     <input
       :type="this.type"
-      class="appearance-none block text-lg w-full bg-transparent mt-4 pb-2 border-b border-gray-500 focus:outline-none focus:border-white placeholder-gray-500"
+      :class="this.class"
       :name="this.name"
       :min="this.min"
       :max="this.max"
       :step="this.step"
       :placeholder="this.placeholder"
+      :disabled="this.disabled"
       v-model="this.value"
     />
     <FormError
@@ -55,12 +56,20 @@ export default {
     step: {
       type: String
     },
+    disabled: {
+      type: Boolean
+    },
     error: {
       type: Array
     }
   },
   emits: ["update:modelValue"],
   computed: {
+    class() {
+      const className = 'appearance-none block text-lg w-full bg-transparent mt-4 pb-2 border-b border-gray-500 focus:outline-none focus:border-white placeholder-gray-500';
+      const disabledClassName = 'opacity-50 cursor-not-allowed';
+      return this.disabled ? `${className} ${disabledClassName}`: className;
+    },
     value: {
       get() {
         return this.modelValue;
