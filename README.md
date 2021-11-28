@@ -19,7 +19,7 @@ Help us out by testing this project in the [staging environment][link-staging]. 
 If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
 ## Built With
-Vue 3,
+Vue 3
 
 ### Programming languages
 Javascript
@@ -52,7 +52,7 @@ $ yarn serve
 Describe and show how to build your code and run the tests.
 ```
 $ yarn build
-``
+```
 
 ## Feedback
 
