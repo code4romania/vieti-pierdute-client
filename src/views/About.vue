@@ -86,7 +86,6 @@
                     </li>
                   </ul>
 
-                  <div class="mb-4 uppercase text-xs tracking-wider font-sans">Transparență</div>
                 </div>
               </div>
             </div>
