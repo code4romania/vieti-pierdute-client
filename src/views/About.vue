@@ -85,6 +85,8 @@
                       </a>
                     </li>
                   </ul>
+
+                  <div class="mb-4 uppercase text-xs tracking-wider font-sans">Transparență</div>
                 </div>
               </div>
             </div>
@@ -149,6 +151,9 @@ export default {
 <style>
 .content-wrap p {
   margin-bottom: 32px;
+}
+.content-wrap a {
+  text-decoration: underline;
 }
 </style>
 

@@ -12,11 +12,15 @@
       {{ title }}
     </router-link>
 
-    <div class="mb-8 text-2xl font-thin text-white text-opacity-80">
+    <div class="mb-8 text-2xl font-thin text-white text-opacity-80 content-wrap">
       <Markdown :source="content" />
     </div>
 
-    <ul v-if="buttons" class="mb-8">
+    <div class="mb-8">
+      <Switch :list="list" :gallery="gallery" @switchView="onSwitchView" />
+    </div>
+
+    <ul v-if="buttons" class="lg:mb-16">
       <li v-for="button in buttons" v-bind:key="button.id">
         <router-link
           v-if="button.href"
@@ -26,10 +30,6 @@
         >
       </li>
     </ul>
-
-    <div class="lg:mb-16">
-      <Switch :list="list" :gallery="gallery" @switchView="onSwitchView" />
-    </div>
 
     <MadeBy class="hidden lg:block" />
   </div>
