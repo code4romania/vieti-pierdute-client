@@ -182,7 +182,7 @@ export default {
         this.stories.length > 0 &&
         victimsCount &&
         [
-          ...shuffle([...list, ...this.placeholdersList(list.length * 10)]),
+          ...shuffle([...list, ...this.placeholdersList(list.length * 25)]),
           ...this.placeholdersList(victimsCount - list.length * 10)
         ].reduce((result, item, i) => {
           const rowIndex = Math.floor(i / 2);
