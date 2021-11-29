@@ -1,39 +1,64 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Listing from '../views/Listing.vue'
-import Add from '../views/Add.vue'
-import About from '../views/About.vue'
+import {
+  createRouter,
+  createWebHistory,
+} from "vue-router";
 
-const routes = [{
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
-    {
-        path: '/povesti',
-        name: 'Stories',
-        component: Listing
-    },
-    {
-        path: '/poveste/:storyId?',
-        name: 'Story',
-        component: Listing
-    },
-    {
-        path: '/adauga-o-poveste',
-        name: 'Add',
-        component: Add
-    },
-    {
-        path: '/despre',
-        name: 'About',
-        component: About
+import Home from "../views/Home.vue";
+import Listing from "../views/Listing.vue";
+import Add from "../views/Add.vue";
+import Page from "../views/Page.vue";
+
+const routes = [
+  {
+    path: "/",
+    name: "Acasă",
+    component: Home,
+  },
+  {
+    path: "/povesti",
+    name: "Povești",
+    component: Listing,
+  },
+  {
+    path: "/poveste/:storyId?",
+    name: "Poveste",
+    component: Listing,
+  },
+  {
+    path: "/adauga-o-poveste",
+    name: "Adaugă o poveste",
+    component: Add,
+  },
+  {
+    path: "/despre",
+    name: "Despre",
+    component: Page,
+    meta: {
+      slug: "about",
+      featured: true
     }
-]
+  },
+  {
+    path: "/termenii-si-conditiile",
+    name: "Termenii și condițiile",
+    component: Page,
+    meta: {
+      slug: "termenii-si-conditiile"
+    }
+  },
+  {
+    path: "/politica-de-confidentialitate",
+    name: "Politica de confidențialitate",
+    component: Page,
+    meta: {
+      slug: "politica-de-confidentialitate"
+    }
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(),
+  routes,
+});
 
-export default router
+export default router;
