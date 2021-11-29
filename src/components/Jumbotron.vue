@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 lg:p-8">
+  <div class="lg:p-8">
     <Nav />
     <router-link
       to="/"
@@ -20,7 +20,7 @@
       <Switch :list="list" :gallery="gallery" @switchView="onSwitchView" />
     </div>
 
-    <ul v-if="buttons" class="lg:mb-16">
+    <ul v-if="buttons" class="mb-8 lg:mb-16">
       <li v-for="button in buttons" v-bind:key="button.id">
         <router-link
           v-if="button.href"

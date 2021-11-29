@@ -68,7 +68,7 @@
                       v-if="storiesList.length > 0"
                       :items="storiesList"
                       :min-item-size="200"
-                      class="listing-list h-screen pb-28"
+                      class="listing-list h-screen pb-28 p-4"
                       key-field="index"
                     >
                       <template v-slot="{ item, index, active }">
@@ -163,9 +163,9 @@ export default {
       );
     },
     storiesList: function() {
-      console.log(this.stories)
       const victimsCount =
         this.page && +this.page.components[0].victimsCount.victims;
+
       const list = this.stories.map(story => ({
         id: story.id,
         title: `${story.victimFirstName} ${ typeof story.victimLastName !== 'undefined' ? story.victimLastName : ''}`,
@@ -178,6 +178,7 @@ export default {
         isExternal: story.isExternal,
         externalLink: story.externalLink
       }));
+
       const rows =
         this.stories.length > 0 &&
         victimsCount &&

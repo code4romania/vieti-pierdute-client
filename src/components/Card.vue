@@ -6,7 +6,9 @@
         v-for="story in row.stories"
         v-bind:key="'story-' + story.id"
       >
-        <div class="text-base uppercase opacity-60 mb-4">{{ story.address }}</div>
+        <div class="mb-4 tracking-wide text-sm text-gray-400 font-sans uppercase">
+          {{ story.address }}
+        </div>
         <component
           :is="story.isExternal && story.externalLink ? 'a' : story.url ? 'router-link' : 'div'"
           :class="story.url ? 'cursor-pointer hover:text-gray-400' : 'text-gray-400'"
