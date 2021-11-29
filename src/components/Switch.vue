@@ -29,6 +29,12 @@ export default {
   methods: {
     switchView() {
       this.$emit("switchView", { list: !this.list, gallery: !this.gallery });
+
+      this.$gtag.event("switchView", {
+        "event_category": "UI",
+        "event_label": this.list ? "list" : "gallery",
+        "value": this.list || this.gallery
+      });
     }
   }
 };
