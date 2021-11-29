@@ -133,8 +133,8 @@ export default {
   },
   data: () => {
     return {
-      list: false,
-      gallery: true,
+      list: true,
+      gallery: false,
       stories: [],
       storiesError: null,
       storiesLoading: false,
@@ -182,8 +182,8 @@ export default {
         this.stories.length > 0 &&
         victimsCount &&
         [
-          ...shuffle([...list, ...this.placeholdersList(list.length)]),
-          ...this.placeholdersList(victimsCount - list.length * 5)
+          ...shuffle([...list, ...this.placeholdersList(list.length * 10)]),
+          ...this.placeholdersList(victimsCount - list.length * 10)
         ].reduce((result, item, i) => {
           const rowIndex = Math.floor(i / 2);
           if (result && result[rowIndex]) {
