@@ -39,11 +39,11 @@ const routes = [
     }
   },
   {
-    path: "/termenii-si-conditiile",
-    name: "Termenii și condițiile",
+    path: "/termeni-si-conditii",
+    name: "Termeni și condiții",
     component: Page,
     meta: {
-      slug: "termenii-si-conditiile"
+      slug: "termeni-si-conditii"
     }
   },
   {
