@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:p-8">
+  <div class="md:p-4 lg:p-8">
     <Nav />
     <router-link
       to="/"
