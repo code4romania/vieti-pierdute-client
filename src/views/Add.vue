@@ -168,12 +168,7 @@
               >Prin completarea acestui formular declar că sunt de acord cu
               prelucrarea datelor personale furnizate în conformitate cu
               prevederile specificate în
-              <a
-                href="https://docs.google.com/document/d/12Xb0j7c511iWwymK7TP1C9UKypEQPhp5mSJqPVE5Utg/edit"
-                target="_blank"
-                class="underline"
-                >termenii și condițiile</a
-              >
+              <router-link to="/termeni-si-conditii" class="underline">termenii și condițiile</router-link>
               de utilizare ale acestui website.</Checkbox
             >
           </InputGroup>
@@ -183,19 +178,9 @@
               v-model="story.agreeTerms2"
               :error="errors.agreeTerms2"
               >Declar că am citit și sunt de acord cu
-              <a
-                href="https://docs.google.com/document/d/1k0q1V-J5vhbUcXDqUXVKNjLUaTQkYqM6VRJiuu0dCpQ/edit"
-                target="_blank"
-                class="underline"
-                >politica de confidențialitate</a
-              >
+              <router-link to="/politica-de-confidentialitate" class="underline">politica de confidențialitate</router-link>
               și
-              <a
-                href="https://docs.google.com/document/d/12Xb0j7c511iWwymK7TP1C9UKypEQPhp5mSJqPVE5Utg/edit"
-                target="_blank"
-                class="underline"
-                >termenii și condițiile</a
-              >
+              <router-link to="/termeni-si-conditii" class="underline">termenii și condițiile</router-link>
               de utilizare ale acestui website.</Checkbox
             >
           </InputGroup>
