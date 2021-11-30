@@ -34,7 +34,7 @@
               mici modificări la editare, fără să îi fie alterat în vreun fel
               sensul. Din acest motiv, te rugăm să ne permiți câteva zile până la
               publicarea ei. Pentru orice clarificări, ne poți contacta la
-              <a href="mailto:contact@vietipierdute.ro" class="underline">contact@vietipierdute.ro</a>
+              <a href="mailto:vietipierdute@code4.ro" class="underline">vietipierdute@code4.ro</a>
             </div>
           </div>
           <ul class="mt-12 mb-8">
