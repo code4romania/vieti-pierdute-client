@@ -8,8 +8,8 @@
       <div v-for="component in page.components" v-bind:key="component.id">
         <div class="max-w-screen-2xl mx-auto">
           <div class="grid grid-cols-8">
-            <div class="col-span-full lg:col-span-3 hidden md:block">
-              <div class="lg:fixed lg:max-w-xs xl:max-w-lg lg:h-full">
+            <div class="col-span-full lg:col-span-3 hidden lg:block">
+              <div class="lg:fixed lg:max-w-md xl:max-w-lg lg:h-full">
                 <Jumbotron
                   :title="(+component.victimsCount.victims).toLocaleString()"
                   :content="component.content"
@@ -39,7 +39,7 @@
                         :size-dependencies="[item.stories]"
                         :data-index="index"
                       >
-                        <div v-show="index === 0" class="md:hidden">
+                        <div v-show="index === 0" class="lg:hidden">
                           <Jumbotron
                             :title="
                               (+component.victimsCount.victims).toLocaleString()
@@ -78,7 +78,7 @@
                           :size-dependencies="[item.stories]"
                           :data-index="index"
                         >
-                          <div v-show="index === 0" class="md:hidden">
+                          <div v-show="index === 0" class="lg:hidden">
                             <Jumbotron
                               :title="
                                 (+component.victimsCount
@@ -183,7 +183,7 @@ export default {
         this.stories.length > 0 &&
         victimsCount &&
         [
-          ...shuffle([...list, ...this.placeholdersList(list.length * 25)]),
+          ...shuffle([...list, ...this.placeholdersList(list.length * 20)]),
           ...this.placeholdersList(victimsCount - list.length * 10)
         ].reduce((result, item, i) => {
           const rowIndex = Math.floor(i / 2);

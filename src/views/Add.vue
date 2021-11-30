@@ -4,34 +4,51 @@
       <div class="p-4 lg:p-8">
         <Nav />
         <Heading :level="1">
-          <a @click="$router.go(-1)" class="cursor-pointer">
+          <a
+            @click="$router.go(-1)"
+            class="cursor-pointer"
+          >
             <span
               class="absolute left-0 top-0 bottom-0 my-auto transform rotate-45 w-9 h-9 border-l-2 border-b-2 border-white"
             ></span>
           </a>
           <div class="pl-10">
-            <span v-if="!isSend">Adaugă povestea cuiva drag</span>
-            <span v-else>Ai trimis o poveste</span>
+            <span v-if="!isStorySent">Adaugă povestea cuiva drag</span>
+            <span v-else>Mulțumim</span>
           </div>
         </Heading>
-        <p class="text-2xl font-light mb-10 max-w-4xl">
+        <p  v-if="!isStorySent" class="text-2xl font-light mb-10 max-w-4xl">
           Cineva drag nu-ți mai este azi alături din cauza Covid-19.<br />Povestea
           vieții însă va rămâne scrisă mereu.
         </p>
-        <div v-if="isSend" class="mb-10">
-          <div class="text-4xl">Mulțumim,</div>
-          <p>povestea ta a fost trimisă către echipa noastră.</p>
-          <p>
-            Te vom contacta în scurt timp pentru a ne asigura că toate datele pe
-            care le-am primit sunt corecte.
-          </p>
-          <p>
-            Te anunțăm că este posibil ca povestea pe care ai scris-o să sufere
-            mici modificări la editare, fără să îi fie alterat în vreun fel
-            sensul. Din acest motiv, te rugăm să ne permiți câteva zile până la
-            publicarea ei. Pentru orice clarificări, ne poți contacta la
-            contact@vietipierdute.ro
-          </p>
+        <div v-if="isStorySent" class="mb-10 max-w-xl">
+          <div class="text-6xl font-thin mb-8">Ai trimis povestea.</div>
+          <div class="text-lg font-thin">
+            <div class="mb-4">Povestea ta a fost trimisă către echipa noastră.</div>
+            <div class="mb-4">
+              Te vom contacta în scurt timp pentru a ne asigura că toate datele pe
+              care le-am primit sunt corecte.
+            </div>
+            <div class="mb-4">
+              Te anunțăm că este posibil ca povestea pe care ai scris-o să sufere
+              mici modificări la editare, fără să îi fie alterat în vreun fel
+              sensul. Din acest motiv, te rugăm să ne permiți câteva zile până la
+              publicarea ei. Pentru orice clarificări, ne poți contacta la
+              <a href="mailto:contact@vietipierdute.ro" class="underline">contact@vietipierdute.ro</a>
+            </div>
+          </div>
+          <ul class="mt-12 mb-8">
+            <li>
+              <a @click="reset" class="cursor-pointer inline-block mb-2 py-3 text-2xl font-light lg:text-xl xl:text-2xl">
+                <span class="underline">Adaugă altă poveste</span>
+              </a>
+            </li>
+            <li>
+              <router-link to="/povesti" class="inline-block mb-2 py-3 text-2xl font-light lg:text-xl xl:text-2xl">
+                <span class="underline">Descoperă toate poveștile</span>
+              </router-link>
+            </li>
+          </ul>
         </div>
         <form
           v-else
@@ -200,12 +217,16 @@
               @fail="recaptchaFailed"
               class="mb-8 md:mb-0"
             ></reCaptcha>
-            <button
-              type="submit"
-              class="inline-block py-3 text-2xl underline font-light lg:text-2xl xl:text-3xl"
-            >
-              Trimite povestea
-            </button>
+            <div class="flex flex-col">
+              <div v-if="Object.keys(errors).length !== 0" class="text-red-400 text-center lg:text-right">Te rugăm corectează erorile și retrimite.</div>
+              <button
+                type="submit"
+                class="inline-block py-3 text-2xl underline font-light lg:text-2xl xl:text-3xl"
+              >
+                <Spinner v-if="isLoading" />
+                <div v-else>Trimite povestea</div>
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -230,6 +251,7 @@ import Textarea from "@/components/Textarea";
 import Select from "@/components/Select";
 import InputGroup from "@/components/InputGroup";
 import Checkbox from "@/components/Checkbox";
+import Spinner from "@/components/Spinner";
 
 export default {
   components: {
@@ -240,7 +262,8 @@ export default {
     Textarea,
     Select,
     Checkbox,
-    reCaptcha
+    reCaptcha,
+    Spinner
   },
   data: () => ({
     errors: {},
@@ -263,7 +286,8 @@ export default {
     allCities,
     currentCities: [],
     showRecaptcha: true,
-    isSend: false
+    isStorySent: false,
+    isLoading: false
   }),
   computed: {
     recaptchSiteKey() {
@@ -277,33 +301,40 @@ export default {
   methods: {
     checkForm: function(e) {
       e.preventDefault();
+
       const validationSchema = this.story.hasLastNamePrivate
         ? storySchema.filter(schema => schema.key !== 'victimLastName')
         : storySchema;
       const { errors, isValid } = validate(this.story, validationSchema);
-      this.errors = errors;
 
-      // TODO: scrolling behaviour or smth to let the user know he error above his screen view
+      this.errors = errors;
 
       // console.log(this.errors)
       console.log(this.story);
 
-      // debugger
-
       if (isValid) {
+        this.isLoading = true;
+
         api
           .postStory(this.story)
           .then(response => {
-            // TODO: update screen with thank you, e-mail notification? & maybe smth to click further on?
-            console.log(response);
-            this.isSend = true;
+            // debugger;
+
+            this.isLoading = false;
+            this.isStorySent = true;
           })
           .catch(error => {
             if (error.response) {
+              this.isLoading = false;
               this.errors = error.response.data.data.errors;
             }
           });
       }
+    },
+    reset() {
+      this.isStorySent = false;
+      this.isLoading = false;
+      this.story = {};
     },
     loadCities(county) {
       this.currentCities = [];

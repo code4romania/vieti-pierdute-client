@@ -5,66 +5,66 @@ export const storySchema = [
   {
     key: "victimFirstName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți prenumele"
+    error: "Vă rugăm introduceți prenumele."
   },
   {
     key: "victimLastName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți numele"
+    error: "Vă rugăm introduceți numele."
   },
   {
     key: "age",
     condition: isEmpty,
-    error: "Vă rugăm introduceți vârsta"
+    error: "Vă rugăm introduceți vârsta."
   },
   {
     key: "age",
     condition: isNotNumber,
-    error: "Vă rugăm introduceți doar cifre"
+    error: "Vă rugăm introduceți doar cifre."
   },
   {
     key: "occupation",
     condition: isEmpty,
-    error: "Vă rugăm introduceți ocupația"
+    error: "Vă rugăm introduceți ocupația."
   },
   {
     key: "county",
     condition: isEmpty,
-    error: "Vă rugăm alegeți județul"
+    error: "Vă rugăm alegeți județul."
   },
   {
     key: "city",
     condition: isEmpty,
-    error: "Vă rugăm alegeți localitatea"
+    error: "Vă rugăm alegeți localitatea."
   },
   {
     key: "content",
     condition: isEmpty,
-    error: "Vă rugăm introduceți povestea"
+    error: "Vă rugăm introduceți povestea."
   },
   {
     key: "authorFirstName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți prenumele dumneavoastră"
+    error: "Vă rugăm introduceți prenumele dumneavoastră."
   },
   {
     key: "authorLastName",
     condition: isEmpty,
-    error: "Vă rugăm introduceți numele dumneavoastră"
+    error: "Vă rugăm introduceți numele dumneavoastră."
   },
   {
     key: "authorEmail",
     condition: isEmpty,
-    error: "Vă rugăm introduceți e-mail-ul dumneavoastră"
+    error: "Vă rugăm introduceți e-mail-ul dumneavoastră."
   },
   {
     key: "agreeTerms",
     condition: isEmpty,
-    error: "Va rugăm bifati asta"
+    error: "Pentru a trimite povestea trebuie să fiți de acord cu termenii și condițiile platformei."
   },
   {
     key: "agreeTerms2",
     condition: isEmpty,
-    error: "Va rugam bifati si asta"
+    error: "Pentru a trimite povestea trebuie să fiți de acord cu politica de confidențialitate a platformei."
   }
 ];

@@ -41,6 +41,19 @@
                   class="text-2xl text-white text-opacity-60  font-light lg:mt-64 xl:mt-80"
                   :source="component.content"
                 />
+                <ul
+                  v-if="component.buttons"
+                  class="mb-8 md:hidden"
+                >
+                  <li v-for="button in component.buttons" v-bind:key="button.id">
+                    <router-link
+                      v-if="button.href"
+                      :to="button.href"
+                      class="inline-block mb-2 py-3 text-2xl font-light lg:text-xl xl:text-2xl"
+                      ><span class="underline">{{ button.text }}</span></router-link
+                    >
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

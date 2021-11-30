@@ -69,7 +69,7 @@
     <router-link
       to="/despre"
       :class="inverted ? 'text-white' : 'text-gray-600'"
-      class="inline-block py-3 px-2 text-base tracking-wide text-opacity-60 hover:text-opacity-100"
+      class="inline-block py-3 px-2 text-base tracking-wide text-opacity-60 hover:text-opacity-100 leading-5"
       >Despre proiect</router-link
     >
 
@@ -77,7 +77,7 @@
       v-show="nextStoryId"
       :to="`/poveste/${nextStoryId}`"
       :class="inverted ? 'text-white' : 'text-gray-600'"
-      class="inline-block py-3 px-2 text-base tracking-wide text-opacity-60 hover:text-opacity-100"
+      class="inline-block py-3 px-2 text-base tracking-wide text-opacity-60 hover:text-opacity-100 leading-5"
       >Altă poveste</router-link
     >
   </div>
