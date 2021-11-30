@@ -32,16 +32,19 @@
               <div
                 class="relative block w-full leading-tight font-light mt-5 pt-3 mb-2 pb-0 text-5xl lg:text-7xl"
               >
-                <div class="mb-4 tracking-wide text-gray-500 text-xs font-sans uppercase">
+                <div
+                  class="mb-4 tracking-wide text-gray-500 text-xs font-sans uppercase"
+                >
                   {{ story.city }}, {{ story.county }}
                 </div>
                 <div class="mb-4">
                   {{
-                    story.victimFirstName +
-                      " " +
-                      story.victimLastName +
-                      ", " +
-                      story.age
+                    `
+                    ${story.victimFirstName}${
+                      typeof story.victimLastName !== "undefined"
+                        ? " " + story.victimLastName
+                        : ""
+                    }, ${story.age}`
                   }}
                 </div>
                 <div class="mb-8 text-xl">
@@ -50,10 +53,10 @@
               </div>
 
               <!-- <div class="mb-8 filter grayscale max-w-2xl"> -->
-                <!-- NEED HELP HERE: For some reason process.env.VUE_APP_API won't render here, tried a computed value also, process.env is an empty object in that case -->
-                <!-- {{process.env.VUE_APP_API}} -->
-                <!-- <img :src="'http://localhost:1337' + story.image.url"> -->
-                <!-- <img src="https://picsum.photos/id/1005/900/450" /> -->
+              <!-- NEED HELP HERE: For some reason process.env.VUE_APP_API won't render here, tried a computed value also, process.env is an empty object in that case -->
+              <!-- {{process.env.VUE_APP_API}} -->
+              <!-- <img :src="'http://localhost:1337' + story.image.url"> -->
+              <!-- <img src="https://picsum.photos/id/1005/900/450" /> -->
               <!-- </div> -->
 
               <div class="content-wrap text-lg leading-relaxed">
@@ -68,7 +71,7 @@
 </template>
 
 <script>
-import Markdown from 'vue3-markdown-it';
+import Markdown from "vue3-markdown-it";
 
 import api from "@/api";
 

@@ -310,7 +310,7 @@ export default {
       this.errors = errors;
 
       // console.log(this.errors)
-      console.log(this.story);
+      // console.log(this.story);
 
       if (isValid) {
         this.isLoading = true;

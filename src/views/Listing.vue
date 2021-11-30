@@ -168,7 +168,7 @@ export default {
 
       const list = this.stories.map(story => ({
         id: story.id,
-        title: `${story.victimFirstName} ${ typeof story.victimLastName !== 'undefined' ? story.victimLastName : ''}`,
+        title: `${story.victimFirstName}${typeof story.victimLastName !== 'undefined' ? ' ' + story.victimLastName : ''}`,
         age: story.age,
         occupation: story.occupation,
         address: `${story.city}, ${story.county}`,
