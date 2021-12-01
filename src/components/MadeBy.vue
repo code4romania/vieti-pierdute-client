@@ -1,6 +1,6 @@
 <template>
   <div class="MadeBy font-sans">
-    <div class="flex gap-16">
+    <div class="flex gap-8 md:gap-16">
       <div>
         <div
           :class="{'text-black': !inverted}"
@@ -13,7 +13,7 @@
           target="_blank"
         >
           <svg
-            :class="'fill-current h-10 w-auto'"
+            :class="'fill-current h-8 md:h-10 w-auto'"
             viewBox="0 0 400 121.9"
           >
             <path d="M48.8,2.5,31.5,5.1,0,61l31.5,55.8,17.3,2.6L15.2,61ZM93,2.5l17.3,2.6L141.8,61l-31.5,55.8L93,119.4,126.6,61Z"></path>
@@ -34,7 +34,7 @@
           target="_blank"
         >
           <svg
-            :class="'fill-current h-8 w-auto'"
+            :class="'fill-current h-6 md:h-8 w-auto'"
             viewBox="-1969.404 8843.04 215.728 67.124"
             xmlns="http://www.w3.org/2000/svg"
           >
